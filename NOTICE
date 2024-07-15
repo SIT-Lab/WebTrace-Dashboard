@@ -1,0 +1,134 @@
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+...
+
+This project includes the following third-party libraries that are licensed under the Apache License 2.0:
+
+1. **firebase**
+   - Firebase JavaScript SDK
+   - Licensed under the Apache License 2.0
+   - https://www.npmjs.com/package/firebase
+
+2. **typescript**
+   - TypeScript is a typed superset of JavaScript
+   - Licensed under the Apache License 2.0
+   - https://www.npmjs.com/package/typescript
+
+3. **web-vitals**
+   - Essential metrics for a healthy site
+   - Licensed under the Apache License 2.0
+   - https://www.npmjs.com/package/web-vitals
+
+...
+
+This project also includes libraries licensed under the MIT license:
+
+1. **@testing-library/jest-dom**
+   - Custom jest matchers to test the state of the DOM
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@testing-library/jest-dom
+
+2. **@testing-library/react**
+   - React Testing Library builds on top of DOM Testing Library by adding APIs for working with React components
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@testing-library/react
+
+3. **@testing-library/user-event**
+   - Fire events the same way the user does
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@testing-library/user-event
+
+4. **@types/jest**
+   - TypeScript definitions for Jest
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@types/jest
+
+5. **@types/node**
+   - TypeScript definitions for Node.js
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@types/node
+
+6. **@types/react**
+   - TypeScript definitions for React
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@types/react
+
+7. **@types/react-dom**
+   - TypeScript definitions for ReactDOM
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@types/react-dom
+
+8. **@types/react-router-dom**
+   - TypeScript definitions for React Router DOM
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/@types/react-router-dom
+
+9. **prettier**
+   - Code formatter
+   - Licensed under the MIT License
+   - https://www.npmjs.com/package/prettier
+
+10. **react**
+    - JavaScript library for building user interfaces
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/react
+
+11. **react-dom**
+    - Serves as the entry point of the DOM-related rendering paths
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/react-dom
+
+12. **react-router-dom**
+    - DOM bindings for React Router
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/react-router-dom
+
+13. **react-scripts**
+    - Scripts and configuration used by Create React App
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/react-scripts
+
+14. **styled-components**
+    - Visual primitives for the component age
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/styled-components
+
+15. **@babel/plugin-proposal-private-property-in-object**
+    - Babel plugin for private property in object
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/@babel/plugin-proposal-private-property-in-object
+
+16. **@types/styled-components**
+    - TypeScript definitions for styled-components
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/@types/styled-components
+
+17. **eslint**
+    - Linting utility for JavaScript and JSX
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/eslint
+
+18. **eslint-plugin-prettier**
+    - Runs prettier as an ESLint rule
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/eslint-plugin-prettier
+
+19. **eslint-plugin-react-refresh**
+    - ESLint rules for React Fast Refresh
+    - Licensed under the MIT License
+    - https://www.npmjs.com/package/eslint-plugin-react-refresh
+
+...
+
+This project also includes libraries licensed under the BSD-2-Clause license:
+
+1. **dotenv**
+   - Loads environment variables from a .env file
+   - Licensed under the BSD-2-Clause License
+   - https://www.npmjs.com/package/dotenv
+
+For the full text of the Apache License 2.0, see the LICENSE file included in this repository.
