@@ -8,6 +8,7 @@ import addIcon from '../../assets/add.svg'
 import { downloadLogDataCSV } from '../../utils/downloadLogData'
 import TargetColumnSelector from '../atoms/TargetColumnSelector'
 import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
+import UnAbstractTable from '../molecules/UnAbstractTable'
 
 const Container = styled.div`
   margin: 16px;
@@ -34,17 +35,28 @@ const HeaderBtnCont = styled.div`
   padding: 16px 0;
 `
 
-const DownloadButton = styled.button`
+const ButtonBase = styled.button`
   border-radius: 12px;
   border: 1px solid ${COLORS.gray02};
   background-color: transparent;
-  padding: 8px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  height: 80px; /* 동일한 높이 설정 */
+`
+
+const DownloadButton = styled(ButtonBase)`
   max-width: 150px;
   margin: 16px 0px 16px 0px;
-  cursor: pointer;
+`
+
+const RemoveAbstractionButton = styled(ButtonBase)`
+  max-width: 150px;
+  margin-right: 16px;
+  margin-top: 16px;
 `
 
 const IconInButton = styled.img`
@@ -58,6 +70,24 @@ const Content = styled.div`
   margin-top: 10px;
   overflow-y: auto;
   width: 100%;
+`
+
+const RemoveAbstractionCheckbox = styled.input.attrs({ type: 'checkbox' })`
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px solid ${COLORS.gray02};
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  &:checked {
+    background-color: #2196f3;
+  }
+`
+const CheckboxLabel = styled.span`
+  padding-left: 8px;
 `
 
 /**
@@ -77,6 +107,7 @@ interface LogPopupProps {
  */
 function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
   const [isShowMenuInLogTable, setIsShowMenuInLogTable] = useState<ShowMenuInLogTable>({
+    abstract: true,
     id: true,
     eventName: true,
     nodeName: true,
@@ -92,26 +123,41 @@ function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
     KeyboardEventKeyCode: true,
   })
 
+  const [isAbstract, setIsAbstract] = useState<boolean>(false)
+
+  const handleCheckboxChange = () => {
+    setIsAbstract(!isAbstract)
+  }
+
   return (
     <Modal isShow={isShowModal} setIsShowModal={setIsShowModal}>
       <Container>
         <HeaderBtnCont>
+
           <TargetColumnSelector
             isShowMenuInLogTable={isShowMenuInLogTable}
             setIsShowMenuInLogTable={setIsShowMenuInLogTable}
           ></TargetColumnSelector>
-          <DownloadButton
-            onClick={() => {
-              downloadLogDataCSV(logs.data, 'logdata.csv')
-            }}
-          >
-            Download CSV
+
+          <RemoveAbstractionButton onClick={handleCheckboxChange}>
+            <RemoveAbstractionCheckbox checked={isAbstract} onChange={handleCheckboxChange} />
+            <CheckboxLabel>Remove Abstraction</CheckboxLabel>
+          </RemoveAbstractionButton>
+
+          <DownloadButton onClick={() => { downloadLogDataCSV(logs.data, 'logdata.csv') }}> Download CSV
             <IconInButton src={addIcon}></IconInButton>
           </DownloadButton>
+
         </HeaderBtnCont>
+
         <Content>
-          <LogTable data={logs.data} isShowMenuInLogTable={isShowMenuInLogTable} />
+          {!isAbstract ? (
+            <LogTable data={logs.data} isShowMenuInLogTable={isShowMenuInLogTable} />
+          ) : (
+            <UnAbstractTable data={logs.data} isShowMenuInLogTable={isShowMenuInLogTable} />
+          )}
         </Content>
+
       </Container>
     </Modal>
   )
