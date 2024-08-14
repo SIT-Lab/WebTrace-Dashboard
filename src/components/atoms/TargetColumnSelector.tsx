@@ -1,5 +1,6 @@
 import React from 'react'
 import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
+import styled from 'styled-components'
 
 /**
  * TargetColumnSelector 컴포넌트의 props를 정의하는 인터페이스
@@ -8,6 +9,26 @@ interface TargetColumnSelectorProp {
   isShowMenuInLogTable: ShowMenuInLogTable // 로그 테이블에 어떤 메뉴(컬럼)를 보여줄지 여부를 저장하는 객체
   setIsShowMenuInLogTable: React.Dispatch<React.SetStateAction<ShowMenuInLogTable>> // 상태를 업데이트하는 함수
 }
+
+/**
+ * 스타일이 적용된 필드셋
+ */
+const StyledFieldset = styled.fieldset`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 70%;
+  padding: 10px; /* 여백 추가 */
+  box-sizing: border-box; /* padding이 너비에 포함되도록 설정 */
+`
+
+/**
+ * 스타일이 적용된 체크박스와 레이블의 컨테이너
+ */
+const CheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 /**
  * TargetColumnSelector 컴포넌트
@@ -35,108 +56,164 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
 
   return (
     <div>
-      <fieldset>
+      <StyledFieldset>
         <legend>표시할 데이터를 선택하세요</legend>
-        <input type="checkbox" name="id" value="id" checked={isShowMenuInLogTable.id} onChange={handleCheckboxChange} />
-        <label>id</label>
-        <input
-          type="checkbox"
-          name="eventName"
-          value="eventName"
-          checked={isShowMenuInLogTable.eventName}
-          onChange={handleCheckboxChange}
-        />
-        <label>eventName</label>
-        <input
-          type="checkbox"
-          name="xpath"
-          value="xpath"
-          checked={isShowMenuInLogTable.xpath}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>xpath</label>
-        <input
-          type="checkbox"
-          name="time"
-          value="time"
-          checked={isShowMenuInLogTable.time}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>time</label>
-        <input
-          type="checkbox"
-          name="url"
-          value="url"
-          checked={isShowMenuInLogTable.url}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>url</label>
-        <input
-          type="checkbox"
-          name="nodeName"
-          value="nodeName"
-          checked={isShowMenuInLogTable.nodeName}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>nodeName</label>
-        <input
-          type="checkbox"
-          name="wheelDirection"
-          value="wheelDirection"
-          checked={isShowMenuInLogTable.wheelDirection}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>wheelDirection</label>
-        <input
-          type="checkbox"
-          name="wheelState"
-          value="wheelState"
-          checked={isShowMenuInLogTable.wheelState}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>wheelState</label>
-        <input
-          type="checkbox"
-          name="whxy"
-          value="whxy"
-          checked={isShowMenuInLogTable.whxy}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>whxy</label>
-        <input
-          type="checkbox"
-          name="imageUrl"
-          value="imageUrl"
-          checked={isShowMenuInLogTable.imageUrl}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>screenshot</label>
-        <input
-          type="checkbox"
-          name="KeyboardEventState"
-          value="KeyboardEventState"
-          checked={isShowMenuInLogTable.KeyboardEventState}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>KeyboardEventState</label>
-        <input
-          type="checkbox"
-          name="KeyboardEventPressedKey"
-          value="KeyboardEventPressedKey"
-          checked={isShowMenuInLogTable.KeyboardEventPressedKey}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>KeyboardEventPressedKey</label>
-        <input
-          type="checkbox"
-          name="KeyboardEventKeyCode"
-          value="KeyboardEventKeyCode"
-          // 인터페이스에서 정의한 이름과 동일하게 맞춰야 함 -> 예) 인터페이스에 imageUrl로 정의되어 있으면 여기도 imageUrl로 해야함
-          checked={isShowMenuInLogTable.KeyboardEventKeyCode}
-          onChange={handleCheckboxChange}
-        ></input>
-        <label>KeyboardEventKeyCode</label>
-      </fieldset>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="abstract"
+            value="abstract"
+            checked={isShowMenuInLogTable.abstract}
+            onChange={handleCheckboxChange}
+          />
+          <label>abstract</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="id"
+            value="id"
+            checked={isShowMenuInLogTable.id}
+            onChange={handleCheckboxChange}
+          />
+          <label>id</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="eventName"
+            value="eventName"
+            checked={isShowMenuInLogTable.eventName}
+            onChange={handleCheckboxChange}
+          />
+          <label>eventName</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="xpath"
+            value="xpath"
+            checked={isShowMenuInLogTable.xpath}
+            onChange={handleCheckboxChange}
+          />
+          <label>xpath</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="time"
+            value="time"
+            checked={isShowMenuInLogTable.time}
+            onChange={handleCheckboxChange}
+          />
+          <label>time</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="url"
+            value="url"
+            checked={isShowMenuInLogTable.url}
+            onChange={handleCheckboxChange}
+          />
+          <label>url</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="nodeName"
+            value="nodeName"
+            checked={isShowMenuInLogTable.nodeName}
+            onChange={handleCheckboxChange}
+          />
+          <label>nodeName</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="wheelDirection"
+            value="wheelDirection"
+            checked={isShowMenuInLogTable.wheelDirection}
+            onChange={handleCheckboxChange}
+          />
+          <label>wheelDirection</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="wheelState"
+            value="wheelState"
+            checked={isShowMenuInLogTable.wheelState}
+            onChange={handleCheckboxChange}
+          />
+          <label>wheelState</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="whxy"
+            value="whxy"
+            checked={isShowMenuInLogTable.whxy}
+            onChange={handleCheckboxChange}
+          />
+          <label>whxy</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="imageUrl"
+            value="imageUrl"
+            checked={isShowMenuInLogTable.imageUrl}
+            onChange={handleCheckboxChange}
+          />
+          <label>screenshot</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="KeyboardEventState"
+            value="KeyboardEventState"
+            checked={isShowMenuInLogTable.KeyboardEventState}
+            onChange={handleCheckboxChange}
+          />
+          <label>KeyboardEventState</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="KeyboardEventPressedKey"
+            value="KeyboardEventPressedKey"
+            checked={isShowMenuInLogTable.KeyboardEventPressedKey}
+            onChange={handleCheckboxChange}
+          />
+          <label>KeyboardEventPressedKey</label>
+        </CheckboxWrapper>
+
+        <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="KeyboardEventKeyCode"
+            value="KeyboardEventKeyCode"
+            checked={isShowMenuInLogTable.KeyboardEventKeyCode}
+            onChange={handleCheckboxChange}
+          />
+          <label>KeyboardEventKeyCode</label>
+        </CheckboxWrapper>
+
+      </StyledFieldset>
     </div>
   )
 }
