@@ -7,6 +7,7 @@ import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
 import { EventClusterItem } from '../../utils/findEventCluster'
 import { findEventCluster } from '../../utils/findEventCluster'
 import LogDetails from './LogDetails'
+import greenCheckIcon from '../../assets/greencheck.svg';
 
 /**
  * 스타일이 적용된 정보 라인 컨테이너
@@ -31,9 +32,19 @@ interface LogHeadProps {
 /**
  * 스타일이 적용된 로그 헤더
  */
-const LogHead = styled.div<LogHeadProps>`
+const LogHead = styled.div<LogHeadProps & { hasAbstract: boolean, hasId: boolean }>`
   display: grid;
-  grid-template-columns: repeat(${(props) => props.columns}, minmax(0, 1fr));
+  grid-template-columns: ${({ hasAbstract, hasId, columns }) => {
+    if (hasAbstract && hasId) {
+      return `0.5fr 0.5fr repeat(${columns - 2}, 1fr)`; // abstract와 id가 모두 있을 때
+    } else if (hasAbstract) {
+      return `0.5fr repeat(${columns - 1}, 1fr)`; // abstract만 있을 때
+    } else if (hasId) {
+      return `0.5fr repeat(${columns - 1}, 1fr)`; // id만 있을 때
+    } else {
+      return `repeat(${columns}, 1fr)`; // 아무 것도 없을 때
+    }
+  }};
   border-top: 1px solid ${COLORS.gray01};
   padding: 16px;
 `
@@ -58,11 +69,21 @@ interface LogColumnProps {
 /**
  * 스타일이 적용된 로그 컬럼
  */
-const LogColumn = styled.tr<LogColumnProps>`
+const LogColumn = styled.tr<LogColumnProps & { hasAbstract: boolean, hasId: boolean }>`
   cursor: pointer;
   background-color: ${({ isSelected }) => (isSelected ? COLORS.blue : 'transparent')};
   display: grid;
-  grid-template-columns: repeat(${(props) => props.columns}, minmax(0, 1fr));
+  grid-template-columns: ${({ hasAbstract, hasId, columns }) => {
+    if (hasAbstract && hasId) {
+      return `0.5fr 0.5fr repeat(${columns - 2}, 1fr)`; // abstract와 id가 모두 있을 때
+    } else if (hasAbstract) {
+      return `0.5fr repeat(${columns - 1}, 1fr)`; // abstract만 있을 때
+    } else if (hasId) {
+      return `0.5fr repeat(${columns - 1}, 1fr)`; // id만 있을 때
+    } else {
+      return `repeat(${columns}, 1fr)`; // 아무 것도 없을 때
+    }
+  }};
   border-top: 1px solid ${COLORS.gray01};
   padding: 16px;
 `
@@ -144,6 +165,7 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
   })
 
   const columnsCount = [
+    isShowMenuInLogTable.abstract,
     isShowMenuInLogTable.id,
     isShowMenuInLogTable.eventName,
     isShowMenuInLogTable.xpath,
@@ -154,8 +176,9 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
   return (
     <LogContainer>
       <InfoLines>
-        <LogHead columns={columnsCount}>
-          {isShowMenuInLogTable.id ? <LogHeadRow>ID</LogHeadRow> : null}
+        <LogHead columns={columnsCount} hasAbstract={isShowMenuInLogTable.abstract} hasId={isShowMenuInLogTable.id}>
+          {isShowMenuInLogTable.abstract ? (<LogHeadRow ><span>abstract</span></LogHeadRow>) : null}
+          {isShowMenuInLogTable.id ? (<LogHeadRow><span>ID</span></LogHeadRow>) : null}
           {isShowMenuInLogTable.eventName ? <LogHeadRow>eventName</LogHeadRow> : null}
           {isShowMenuInLogTable.xpath ? <LogHeadRow>xpath</LogHeadRow> : null}
           {isShowMenuInLogTable.time ? <LogHeadRow>time</LogHeadRow> : null}
@@ -173,8 +196,19 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                 <LogColumn
                   isSelected={isSelected}
                   columns={columnsCount}
+                  hasAbstract={isShowMenuInLogTable.abstract}
+                  hasId={isShowMenuInLogTable.id}
                   onClick={(event) => handleOptionClick(index, event)}
                 >
+                  {isShowMenuInLogTable.abstract ? (
+                    <LogRow>
+                      {['wheel', 'KeyboardEvent'].includes(eventClusterItems[item].eventName) ? (
+                        <img src={greenCheckIcon} alt="Green Check Icon" width={20} height={20} /> // 아이콘을 이미지로 렌더링
+                      ) : (
+                        " " // 조건에 맞지 않을 경우 공백 출력
+                      )}
+                    </LogRow>
+                  ) : null}
                   {isShowMenuInLogTable.id ? <LogRow>{eventClusterItems[item].clusterIndex}</LogRow> : null}
                   {isShowMenuInLogTable.eventName && (
                     <LogRow>
@@ -203,7 +237,7 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
             )
           })
         ) : (
-          <LogColumn columns={columnsCount}>
+          <LogColumn columns={columnsCount} hasAbstract={isShowMenuInLogTable.abstract} hasId={isShowMenuInLogTable.id}>
             <LogRow>No logs Found</LogRow>
           </LogColumn>
         )}
