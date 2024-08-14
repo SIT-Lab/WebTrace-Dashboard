@@ -3,6 +3,7 @@
  * 각 필드의 표시 여부를 boolean 값으로 나타냅니다.
  */
 export interface ShowMenuInLogTable {
+  abstract: boolean //추상화 여부
   id: boolean // ID 표시 여부
   eventName: boolean // 이벤트 이름 표시 여부
   xpath: boolean // XPath 표시 여부
