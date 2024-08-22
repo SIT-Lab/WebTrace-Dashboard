@@ -13,6 +13,7 @@ const RootContainer = styled.div<{ $isShow: boolean }>`
   pointer-events: auto; /// pointer-events: auto로 설정하면 모달창이 열려있는 상태에서 배경을 클릭하여 모달을 닫을 수 있음
   visibility: ${(props) => (props.$isShow ? 'visible' : 'hidden')};
   font-size: large;
+  z-index: 1000;
 `
 
 /**
@@ -30,7 +31,7 @@ const ChildContainer = styled.div`
   background-color: ${COLORS.white};
   border: 2px solid ${COLORS.primary_purple};
   box-sizing: border-box;
-  z-index: 9;
+  z-index: 1001;
 `
 
 /**
@@ -44,7 +45,7 @@ const GrayBackground = styled.div`
   width: 100vw;
   cursor: pointer;
   height: 100vh;
-  z-index: 8;
+  z-index: 999;
 `
 
 /**

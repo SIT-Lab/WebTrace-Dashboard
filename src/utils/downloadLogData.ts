@@ -34,7 +34,7 @@ function convertLogDataToCSV(data: LogData[]): string {
     'url',
     'hostname',
     'pathname',
-    'nodeName',
+    // 'nodeName',
     'wheelState',
     'wheelDirection',
     'w',
@@ -43,8 +43,8 @@ function convertLogDataToCSV(data: LogData[]): string {
     'y',
     'imageUrl',
     'KeyboardEventState',
-    'KeyboardEventPressedKey',
-    'KeyboardEventKeyCode',
+    'pressed key',
+    'key code',
     'hash',
   ]
 
@@ -59,7 +59,7 @@ function convertLogDataToCSV(data: LogData[]): string {
       log.url,
       log.hostname,
       log.pathname,
-      log.nodeName,
+      // log.nodeName,
       log.wheelState,
       log.wheelDirection,
       log.w,

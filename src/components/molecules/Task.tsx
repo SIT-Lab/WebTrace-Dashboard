@@ -30,7 +30,6 @@ const Container = styled.div`
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  margin: 8px 0px;
 `
 
 /**
@@ -125,23 +124,28 @@ function Task(props: TaskData) {
         <InfoContainer>
           <InfoLines>
             <InfoLine>
-              <span>Title: </span>
-              <GrayText>{props.title}</GrayText>
-            </InfoLine>
-            <InfoLine>
-              <span>ID: </span>
-              <GrayText>{props.id}</GrayText>
+              <span>
+                <span style={{ fontWeight: 'bold' }}>Title: </span>
+                <GrayText>{props.title}</GrayText>
+              </span>
             </InfoLine>
             <InfoLine>
               <span>
-                <span>modified at: </span>
+                <span style={{ fontWeight: 'bold' }}>ID: </span>
+                <GrayText>{props.id}</GrayText>
+              </span>
+            </InfoLine>
+            <InfoLine>
+              <span>
+                <span style={{ fontWeight: 'bold' }}>modified at: </span>
                 <GrayText>{formatTimestamp(props.modifiedAt)}</GrayText>
               </span>
               <PadLeft16>
-                <span>launched at: </span>
+                <span style={{ fontWeight: 'bold' }}>launched at: </span>
                 <GrayText>{formatTimestamp(props.launchedAt)}</GrayText>
               </PadLeft16>
             </InfoLine>
+
           </InfoLines>
           <IconButton
             iconPath={deleteIcon}
@@ -167,13 +171,13 @@ function Task(props: TaskData) {
           <>
             <UserHead>
               <UserHeadRow>User ID</UserHeadRow>
-              <UserHeadRow>User Age</UserHeadRow>
-              <UserHeadRow>User Gender</UserHeadRow>
-              <UserHeadRow>User Country</UserHeadRow>
+              <UserHeadRow>Age</UserHeadRow>
+              <UserHeadRow>Gender</UserHeadRow>
+              <UserHeadRow>Country</UserHeadRow>
               <UserHeadRow>Browser/OS/Device</UserHeadRow>
               <UserHeadRow>Accessed Time</UserHeadRow>
               <UserHeadRow>Task Time(sec)</UserHeadRow>
-              <UserHeadRow>Kind Of End</UserHeadRow>
+              <UserHeadRow>End Type</UserHeadRow>
               <UserHeadRow>Log</UserHeadRow>
             </UserHead>
             <AccordionContainer>

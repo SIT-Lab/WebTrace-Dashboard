@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../../styles/colors'
+import TimeDisplay from '../atoms/TimeDisplay'
 import { formatTime } from '../../utils/formatTime'
 import { LogData } from '../../interfaces/apiTypes'
 import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
@@ -36,11 +37,11 @@ const LogHead = styled.div<LogHeadProps & { hasAbstract: boolean, hasId: boolean
   display: grid;
   grid-template-columns: ${({ hasAbstract, hasId, columns }) => {
     if (hasAbstract && hasId) {
-      return `0.5fr 0.5fr repeat(${columns - 2}, 1fr)`; // abstract와 id가 모두 있을 때
+      return `0.2fr 0.2fr repeat(${columns - 2}, 1fr)`; // abstract와 id가 모두 있을 때, id의 너비를 0.3fr로 설정
     } else if (hasAbstract) {
-      return `0.5fr repeat(${columns - 1}, 1fr)`; // abstract만 있을 때
+      return `0.2fr repeat(${columns - 1}, 1fr)`; // abstract만 있을 때
     } else if (hasId) {
-      return `0.5fr repeat(${columns - 1}, 1fr)`; // id만 있을 때
+      return `0.2fr repeat(${columns - 1}, 1fr)`; // id만 있을 때, id의 너비를 0.3fr로 설정
     } else {
       return `repeat(${columns}, 1fr)`; // 아무 것도 없을 때
     }
@@ -48,6 +49,7 @@ const LogHead = styled.div<LogHeadProps & { hasAbstract: boolean, hasId: boolean
   border-top: 1px solid ${COLORS.gray01};
   padding: 16px;
 `
+
 
 /**
  * 스타일이 적용된 로그 헤더 행
@@ -75,11 +77,11 @@ const LogColumn = styled.tr<LogColumnProps & { hasAbstract: boolean, hasId: bool
   display: grid;
   grid-template-columns: ${({ hasAbstract, hasId, columns }) => {
     if (hasAbstract && hasId) {
-      return `0.5fr 0.5fr repeat(${columns - 2}, 1fr)`; // abstract와 id가 모두 있을 때
+      return `0.2fr 0.2fr repeat(${columns - 2}, 1fr)`; // abstract와 id가 모두 있을 때, id의 너비를 0.3fr로 설정
     } else if (hasAbstract) {
-      return `0.5fr repeat(${columns - 1}, 1fr)`; // abstract만 있을 때
+      return `0.2fr repeat(${columns - 1}, 1fr)`; // abstract만 있을 때
     } else if (hasId) {
-      return `0.5fr repeat(${columns - 1}, 1fr)`; // id만 있을 때
+      return `0.2fr repeat(${columns - 1}, 1fr)`; // id만 있을 때, id의 너비를 0.3fr로 설정
     } else {
       return `repeat(${columns}, 1fr)`; // 아무 것도 없을 때
     }
@@ -178,10 +180,10 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
       <InfoLines>
         <LogHead columns={columnsCount} hasAbstract={isShowMenuInLogTable.abstract} hasId={isShowMenuInLogTable.id}>
           {isShowMenuInLogTable.abstract ? (<LogHeadRow ><span>abstract</span></LogHeadRow>) : null}
-          {isShowMenuInLogTable.id ? (<LogHeadRow><span>ID</span></LogHeadRow>) : null}
-          {isShowMenuInLogTable.eventName ? <LogHeadRow>eventName</LogHeadRow> : null}
+          {isShowMenuInLogTable.id ? (<LogHeadRow><span>id</span></LogHeadRow>) : null}
+          {isShowMenuInLogTable.eventName ? <LogHeadRow>event name</LogHeadRow> : null}
           {isShowMenuInLogTable.xpath ? <LogHeadRow>xpath</LogHeadRow> : null}
-          {isShowMenuInLogTable.time ? <LogHeadRow>time</LogHeadRow> : null}
+          {isShowMenuInLogTable.time ? <LogHeadRow>event time</LogHeadRow> : null}
           {isShowMenuInLogTable.url ? <LogHeadRow>url</LogHeadRow> : null}
         </LogHead>
       </InfoLines>
@@ -223,6 +225,7 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                     </LogRow>
                   )}
                   {isShowMenuInLogTable.xpath ? <LogRow>{eventClusterItems[item].xpath}</LogRow> : null}
+                  {/* {isShowMenuInLogTable.time ? <LogRow> <TimeDisplay time={eventClusterItems[item].time} /></LogRow> : null} */}
                   {isShowMenuInLogTable.time ? <LogRow>{formatTime(eventClusterItems[item].time)}</LogRow> : null}
                   {isShowMenuInLogTable.url ? <LogRow>{eventClusterItems[item].url}</LogRow> : null}
                 </LogColumn>

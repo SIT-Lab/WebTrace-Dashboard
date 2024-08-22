@@ -5,6 +5,7 @@ import { styled } from 'styled-components'
 import { COLORS } from '../../styles/colors'
 import { Modal } from '../molecules/Modal'
 import addIcon from '../../assets/add.svg'
+import csvIcon from '../../assets/csv.png'
 import { downloadLogDataCSV } from '../../utils/downloadLogData'
 import TargetColumnSelector from '../atoms/TargetColumnSelector'
 import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
@@ -22,9 +23,9 @@ const Container = styled.div`
 `
 
 /**
- * 스타일이 적용된 헤더 버튼 컨테이너
+ * 스타일이 적용된 헤더 컨테이너
  */
-const HeaderBtnCont = styled.div`
+const HeaderCont = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -33,6 +34,16 @@ const HeaderBtnCont = styled.div`
   background-color: ${COLORS.white};
   z-index: 10;
   padding: 16px 0;
+`
+
+/**
+ * 버튼들을 묶는 새로운 컨테이너
+ */
+const ButtonGroupContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8%;
+  align-items: center;
 `
 
 const ButtonBase = styled.button`
@@ -45,22 +56,20 @@ const ButtonBase = styled.button`
   justify-content: center;
   font-size: 14px;
   cursor: pointer;
-  height: 80px; /* 동일한 높이 설정 */
+  height: 44%; /* 동일한 높이 설정 */
+  margin-right: 10px;
 `
 
 const DownloadButton = styled(ButtonBase)`
   max-width: 150px;
-  margin: 16px 0px 16px 0px;
 `
 
 const RemoveAbstractionButton = styled(ButtonBase)`
   max-width: 150px;
-  margin-right: 16px;
-  margin-top: 16px;
+  padding-left: 20px;
 `
 
 const IconInButton = styled.img`
-  padding-left: 8px;
 `
 
 /**
@@ -73,7 +82,6 @@ const Content = styled.div`
 `
 
 const RemoveAbstractionCheckbox = styled.input.attrs({ type: 'checkbox' })`
-  margin: 0;
   width: 16px;
   height: 16px;
   border: 1px solid ${COLORS.gray02};
@@ -110,7 +118,7 @@ function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
     abstract: true,
     id: true,
     eventName: true,
-    nodeName: true,
+    // nodeName: true,
     url: true,
     time: true,
     wheelState: true,
@@ -132,23 +140,24 @@ function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
   return (
     <Modal isShow={isShowModal} setIsShowModal={setIsShowModal}>
       <Container>
-        <HeaderBtnCont>
-
+        <HeaderCont>
           <TargetColumnSelector
             isShowMenuInLogTable={isShowMenuInLogTable}
             setIsShowMenuInLogTable={setIsShowMenuInLogTable}
           ></TargetColumnSelector>
 
-          <RemoveAbstractionButton onClick={handleCheckboxChange}>
-            <RemoveAbstractionCheckbox checked={isAbstract} onChange={handleCheckboxChange} />
-            <CheckboxLabel>Remove Abstraction</CheckboxLabel>
-          </RemoveAbstractionButton>
+          <ButtonGroupContainer>
+            <RemoveAbstractionButton onClick={handleCheckboxChange}>
+              <RemoveAbstractionCheckbox checked={isAbstract} onChange={handleCheckboxChange} />
+              <CheckboxLabel>Remove Abstraction</CheckboxLabel>
+            </RemoveAbstractionButton>
 
-          <DownloadButton onClick={() => { downloadLogDataCSV(logs.data, 'logdata.csv') }}> Download CSV
-            <IconInButton src={addIcon}></IconInButton>
-          </DownloadButton>
-
-        </HeaderBtnCont>
+            <DownloadButton onClick={() => { downloadLogDataCSV(logs.data, 'logdata.csv') }}>
+              <IconInButton src={csvIcon} style={{ width: '30px', height: '30px', marginRight: '20px' }} />
+              Download CSV
+            </DownloadButton>
+          </ButtonGroupContainer>
+        </HeaderCont>
 
         <Content>
           {!isAbstract ? (

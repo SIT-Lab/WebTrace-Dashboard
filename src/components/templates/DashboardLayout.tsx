@@ -4,6 +4,7 @@ import { SIZES } from '../../styles/sizes'
 import Navbar from '../molecules/Navbar'
 import SideMenu from '../organisms/SideMenu'
 import styled from 'styled-components'
+import { useLocation } from 'react-router-dom'
 
 const Container = styled.div`
   top: 0;
@@ -13,6 +14,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   background-color: ${COLORS.background};
+  z-index: 1000;
 `
 
 /**
@@ -38,8 +40,12 @@ const RightContent = styled.main`
   }
 `
 
-const Gap48 = styled.div`
-  height: 48px;
+const NavbarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 `
 
 /**
@@ -47,23 +53,22 @@ const Gap48 = styled.div`
  * @param {React.ReactNode} props.children - 레이아웃에 포함될 자식 요소들
  */
 function DashboardLayout(props: { children: React.ReactNode }) {
+  const location = useLocation() // 현재 경로를 확인
+
   return (
     <Container>
       <Side>
-        <SideMenu
-          menu={[
-            {
-              name: 'Projects',
-              iconPath: '/Icon.svg',
-            },
-          ]}
-          selectedMenuIndex={0}
-        />
+        <SideMenu ownerID="xKjePzOPc1YWsUmgBMui" />
       </Side>
       <RightContent>
-        <Navbar title="Projects" />
-        <Gap48 />
-        <>{props.children}</>
+        {location.pathname !== '/' && (
+          <NavbarContainer>
+            <Navbar />
+          </NavbarContainer>
+        )}
+        <div style={{ backgroundColor: COLORS.background }}>
+          {props.children}
+        </div>
       </RightContent>
     </Container>
   )
