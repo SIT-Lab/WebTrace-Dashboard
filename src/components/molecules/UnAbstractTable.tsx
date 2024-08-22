@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../../styles/colors'
 import { formatTime } from '../../utils/formatTime'
+import TimeDisplay from '../atoms/TimeDisplay'
 import { LogData } from '../../interfaces/apiTypes'
 import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
 
@@ -43,18 +44,17 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
     return (
         <LogContainer>
             {isShowMenuInLogTable.id ? <LogHeader>id</LogHeader> : null}
-            {isShowMenuInLogTable.eventName ? <LogHeader>eventName</LogHeader> : null}
-            {isShowMenuInLogTable.nodeName ? <LogHeader>nodeName</LogHeader> : null}
+            {isShowMenuInLogTable.eventName ? <LogHeader>event name</LogHeader> : null}
+            {/* {isShowMenuInLogTable.nodeName ? <LogHeader>nodeName</LogHeader> : null} */}
             {isShowMenuInLogTable.url ? <LogHeader>url</LogHeader> : null}
-            {isShowMenuInLogTable.time ? <LogHeader>time</LogHeader> : null}
-            {isShowMenuInLogTable.wheelState ? <LogHeader>wheelState</LogHeader> : null}
-            {isShowMenuInLogTable.wheelDirection ? <LogHeader>wheelDirection</LogHeader> : null}
+            {isShowMenuInLogTable.time ? <LogHeader>event time</LogHeader> : null}
+            {isShowMenuInLogTable.wheelState || isShowMenuInLogTable.KeyboardEventState ? <LogHeader>state</LogHeader> : null}
+            {isShowMenuInLogTable.wheelDirection ? <LogHeader>wheel direction</LogHeader> : null}
             {isShowMenuInLogTable.whxy ? <LogHeader>(width, height, x , y)</LogHeader> : null}
             {isShowMenuInLogTable.xpath ? <LogHeader>xpath</LogHeader> : null}
             {isShowMenuInLogTable.imageUrl ? <LogHeader>screenshot</LogHeader> : null}
-            {isShowMenuInLogTable.KeyboardEventState ? <LogHeader>KeyboardEventState</LogHeader> : null}
-            {isShowMenuInLogTable.KeyboardEventPressedKey ? <LogHeader>KeyboardEventPressedKey</LogHeader> : null}
-            {isShowMenuInLogTable.KeyboardEventKeyCode ? <LogHeader>KeyboardEventKeyCode</LogHeader> : null}
+            {isShowMenuInLogTable.KeyboardEventPressedKey ? <LogHeader>pressed key</LogHeader> : null}
+            {isShowMenuInLogTable.KeyboardEventKeyCode ? <LogHeader>key code</LogHeader> : null}
 
             {logArray.length > 0 ? (
                 logArray.map((l: LogData, i) => {
@@ -62,10 +62,16 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                         <LogColumn key={`${i}`}>
                             {isShowMenuInLogTable.id ? <LogRow>{i}</LogRow> : null}
                             {isShowMenuInLogTable.eventName ? <LogRow>{l.eventName}</LogRow> : null}
-                            {isShowMenuInLogTable.nodeName ? <LogRow>{l.nodeName}</LogRow> : null}
+                            {/* {isShowMenuInLogTable.nodeName ? <LogRow>{l.nodeName}</LogRow> : null} */}
                             {isShowMenuInLogTable.url ? <LogRow>{l.url}</LogRow> : null}
+                            {/* {isShowMenuInLogTable.time ? <LogRow><TimeDisplay time={l.time} /></LogRow> : null} */}
                             {isShowMenuInLogTable.time ? <LogRow>{formatTime(l.time)}</LogRow> : null}
-                            {isShowMenuInLogTable.wheelState ? <LogRow>{`${l.wheelState}`}</LogRow> : null}
+                            {isShowMenuInLogTable.wheelState || isShowMenuInLogTable.KeyboardEventState ? (
+                                <LogRow>
+                                    {l.wheelState !== undefined ? `${l.wheelState}` : ""}
+                                    {l.KeyboardEventState !== undefined ? `${l.KeyboardEventState}` : ""}
+                                </LogRow>
+                            ) : null}
                             {isShowMenuInLogTable.wheelDirection ? <LogRow>{`${l.wheelDirection}`}</LogRow> : null}
                             {isShowMenuInLogTable.whxy ? <LogRow>{`(${l.w}, ${l.h}, ${l.x}, ${l.y})`}</LogRow> : null}
                             {isShowMenuInLogTable.xpath ? <LogRow>{l.xpath}</LogRow> : null}
@@ -78,7 +84,6 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                                     )}
                                 </LogRow>
                             ) : null}
-                            {isShowMenuInLogTable.KeyboardEventState ? <LogRow>{`${l.KeyboardEventState}`}</LogRow> : null}
                             {isShowMenuInLogTable.KeyboardEventPressedKey ? <LogRow>{`${l.KeyboardEventPressedKey}`}</LogRow> : null}
                             {isShowMenuInLogTable.KeyboardEventKeyCode ? <LogRow>{`${l.KeyboardEventKeyCode}`}</LogRow> : null}
                         </LogColumn>
