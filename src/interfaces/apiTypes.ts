@@ -5,7 +5,7 @@ import { Timestamp } from 'firebase/firestore'
  */
 export interface LogData {
   eventName: string // Name of event (e.g., wheel, mouseLeftClick, mouseRightClick)
-  nodeName: string // Name of node (e.g., h2, div)
+  // nodeName: string // Name of node (e.g., h2, div)
   hostname: string // Hostname of URL
   pathname: string // Pathname of URL
   url: string // Full URL
