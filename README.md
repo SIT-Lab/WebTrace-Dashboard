@@ -19,7 +19,11 @@ Sitlab Dashboard는 전북대학교 소프트웨어 인터랙션 연구실에서
 | <a href="mailto:sseung7367@jbnu.ac.kr" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?style=round&logo=Gmail&logoColor=white"/></a> | <a href="mailto:heomin02@jbnu.ac.kr" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?style=round&logo=Gmail&logoColor=white"/></a> |
 
 ## 시스템 아키텍쳐
-<작성예정>
+
+<p align="center" >
+  <img src="https://github.com/user-attachments/assets/754a4389-1bbf-4aee-ab8b-37c5513446e7" width="700" alt="image1" style=""/>
+</p>
+
 
 ## 💿사용방법
 <p align="left" >
