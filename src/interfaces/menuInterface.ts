@@ -9,7 +9,7 @@ export interface ShowMenuInLogTable {
   xpath: boolean // XPath 표시 여부
   time: boolean // 시간 표시 여부
   url: boolean // URL 표시 여부
-  nodeName: boolean // 노드 이름 표시 여부
+  // nodeName: boolean // 노드 이름 표시 여부
   wheelDirection: boolean // 휠 방향 표시 여부
   wheelState: boolean // 휠 상태 표시 여부
   whxy: boolean // 너비, 높이, x, y 좌표 표시 여부
