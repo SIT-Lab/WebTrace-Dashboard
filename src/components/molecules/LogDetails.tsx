@@ -9,8 +9,9 @@ import downIcon from '../../assets/down.svg'
  * 스타일이 적용된 이미지 컴포넌트
  */
 const StyledImage = styled.img`
-  width: 400px;
-  height: auto;
+  width: 100%;      /* 너비를 셀 크기에 맞게 설정 */
+  max-width: 400px; /* 이미지의 최대 너비를 설정 */
+  height: auto;     /* 높이는 자동으로 조정 */
   border-radius: 5px;
 `
 
@@ -42,27 +43,9 @@ const DetailsContainer = styled.div`
  */
 const TableHeader = styled.th`
   text-align: center;
-  width: auto;
-  height: 25px;
   border: 1px solid ${COLORS.gray02};
   font-weight: bold;
-`
-
-/**
- * 테이블 헤더 행 스타일링
- */
-const TableHeaderRow = styled.tr`
-  text-align: center;
-  width: auto;
-`
-
-/**
- * 테이블 컬럼 스타일링
- */
-const TableColumn = styled.tr<{ isSelected?: boolean }>`
-  cursor: pointer;
-  background-color: ${({ isSelected }) => (isSelected ? COLORS.blue : 'transparent')};
-  width: auto;
+  height: auto; /* 높이를 자동으로 조정 */
 `
 
 /**
@@ -70,16 +53,24 @@ const TableColumn = styled.tr<{ isSelected?: boolean }>`
  */
 const TableRow = styled.td`
   text-align: center;
-  width: auto;
-  height: 25px;
   border: 1px solid ${COLORS.gray02};
+  height: auto; /* 높이를 자동으로 조정 */
+  word-break: break-word; /* 긴 내용은 자동 줄바꿈 */
 `
 
 /**
- * 첫 번째 컬럼 헤더 스타일링
+ * 테이블 헤더 행 스타일링
  */
-const FirstColumnHeader = styled(TableHeader)`
-  width: 30%;
+const TableHeaderRow = styled.tr<{ hasId: boolean; columns: number; hasScreenshot: boolean }>`
+  display: grid;
+  grid-template-columns: ${({ hasId, columns, hasScreenshot }) => {
+    let template = hasId ? `0.2fr ` : ``; // ID 컬럼 고정
+    template += `repeat(${columns - 1 - (hasScreenshot ? 1 : 0)}, 1fr)`; // 일반 컬럼들
+    if (hasScreenshot) {
+      template += ` 2fr`; // 스크린샷 컬럼의 너비를 더 크게 설정
+    }
+    return template;
+  }};
 `
 
 /**
@@ -102,10 +93,43 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
 
   const filteredLogs = eventClusterItems.filter((log) => log.clusterIndex === clusterIndex)
 
+  let columnsCount = 0;
+
+  const firstLogEventName = filteredLogs.length > 0 ? filteredLogs[0].eventName : '';
+
+  if (firstLogEventName === 'wheel') {
+    columnsCount = [
+      isShowMenuInLogTable.id,
+      isShowMenuInLogTable.eventName,
+      isShowMenuInLogTable.wheelState,
+      isShowMenuInLogTable.wheelDirection,
+      isShowMenuInLogTable.imageUrl,
+    ].filter(Boolean).length; // 총 5개
+  } else if (firstLogEventName === 'KeyboardEvent') {
+    columnsCount = [
+      isShowMenuInLogTable.id,
+      isShowMenuInLogTable.eventName,
+      isShowMenuInLogTable.KeyboardEventState,
+      isShowMenuInLogTable.KeyboardEventPressedKey,
+      isShowMenuInLogTable.KeyboardEventKeyCode,
+      isShowMenuInLogTable.imageUrl,
+    ].filter(Boolean).length; // 총 6개
+  } else if (['mouseLeftClick', 'mouseRightClick', 'mouseWheelClick'].includes(firstLogEventName)) {
+    columnsCount = [
+      isShowMenuInLogTable.id,
+      isShowMenuInLogTable.eventName,
+      isShowMenuInLogTable.whxy,
+      isShowMenuInLogTable.imageUrl,
+    ].filter(Boolean).length; // 총 4개
+  }
+
+  console.log("카운트: ", columnsCount);
+
   let content
 
   if (filteredLogs.length > 0) {
     const firstLogEventName = filteredLogs[0].eventName
+    const hasScreenshot = Boolean(isShowMenuInLogTable.imageUrl);
 
     content = (
       <>
@@ -121,34 +145,32 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
           <img src={downIcon} alt="Toggle" />
         </div>
         <DetailsTable>
-          <TableHeaderRow>
-            {isShowMenuInLogTable.id && <FirstColumnHeader>ID</FirstColumnHeader>}
-            {isShowMenuInLogTable.eventName && <TableHeader>eventName</TableHeader>}
-            {isShowMenuInLogTable.nodeName && <TableHeader>nodeName</TableHeader>}
+          <TableHeaderRow hasId={isShowMenuInLogTable.id} columns={columnsCount} hasScreenshot={hasScreenshot}>
+            {isShowMenuInLogTable.id && <TableHeader>id</TableHeader>}
+            {isShowMenuInLogTable.eventName && <TableHeader>event name</TableHeader>}
             {(firstLogEventName === 'mouseLeftClick' ||
               firstLogEventName === 'mouseRightClick' ||
               firstLogEventName === 'mouseWheelClick') &&
               isShowMenuInLogTable.whxy && <TableHeader>(width, height, x , y)</TableHeader>}
             {firstLogEventName === 'wheel' && (
               <>
-                {isShowMenuInLogTable.wheelState && <TableHeader>wheelState</TableHeader>}
-                {isShowMenuInLogTable.wheelDirection && <TableHeader>wheelDirection</TableHeader>}
+                {isShowMenuInLogTable.wheelState && <TableHeader>state</TableHeader>}
+                {isShowMenuInLogTable.wheelDirection && <TableHeader>wheel direction</TableHeader>}
               </>
             )}
             {firstLogEventName === 'KeyboardEvent' && (
               <>
-                {isShowMenuInLogTable.KeyboardEventState && <TableHeader>KeyboardEventState</TableHeader>}
-                {isShowMenuInLogTable.KeyboardEventPressedKey && <TableHeader>KeyboardEventPressedKey</TableHeader>}
-                {isShowMenuInLogTable.KeyboardEventKeyCode && <TableHeader>KeyboardEventKeyCode</TableHeader>}
+                {isShowMenuInLogTable.KeyboardEventState && <TableHeader>state</TableHeader>}
+                {isShowMenuInLogTable.KeyboardEventPressedKey && <TableHeader>pressed key</TableHeader>}
+                {isShowMenuInLogTable.KeyboardEventKeyCode && <TableHeader>key code</TableHeader>}
               </>
             )}
             {isShowMenuInLogTable.imageUrl && <TableHeader>screenshot</TableHeader>}
           </TableHeaderRow>
           {filteredLogs.map((log, index) => (
-            <TableColumn key={index}>
+            <TableHeaderRow key={index} hasId={isShowMenuInLogTable.id} columns={columnsCount} hasScreenshot={hasScreenshot}>
               {isShowMenuInLogTable.id && <TableRow>{`${clusterIndex}.${log.clusterInsideIndex}`}</TableRow>}
               {isShowMenuInLogTable.eventName && <TableRow>{log.eventName}</TableRow>}
-              {isShowMenuInLogTable.nodeName && <TableRow>{log.nodeName}</TableRow>}
               {(firstLogEventName === 'mouseLeftClick' ||
                 firstLogEventName === 'mouseRightClick' ||
                 firstLogEventName === 'mouseWheelClick') &&
@@ -174,7 +196,7 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
                   <StyledImage src={log.imageUrl} />
                 </TableRow>
               )}
-            </TableColumn>
+            </TableHeaderRow>
           ))}
         </DetailsTable>
       </>
