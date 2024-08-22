@@ -17,6 +17,9 @@ import { OneInputModal } from '../organisms/OneInputModal'
  */
 const RootContainer = styled.div`
   height: auto;
+  background-color: ${COLORS.background};
+  margin-left:  42px;
+  margin-right:  42px;
 `
 
 /**
@@ -24,6 +27,8 @@ const RootContainer = styled.div`
  */
 const Container = styled.div`
   height: auto;
+  background-color: white;
+  border-radius: 16px;
 `
 
 /**
@@ -34,7 +39,7 @@ const MainContainer = styled.div`
   height: auto;
   display: flex;
   background-color: ${COLORS.background};
-  flex-direction: column;
+  flex-direction: column; 
 `
 
 /**
@@ -44,7 +49,6 @@ const TopMenuContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-right: 40px;
-  margin-top: 16px;
 `
 
 /**
@@ -54,15 +58,12 @@ const TestsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  padding: 16px 0px 0px 32px;
 `
 
 /**
  * 스타일이 적용된 Task 컨테이너
  */
 const TasksContainer = styled.div`
-  margin: 32px 42px;
-  height: auto;
   background-color: ${COLORS.background};
 `
 
@@ -81,6 +82,7 @@ const SelectedTestItem = styled.div`
   padding: 8px;
   margin: 8px;
   border-bottom: 2px solid ${COLORS.gray02};
+  font-weight: bold;
 `
 
 /**
@@ -88,6 +90,13 @@ const SelectedTestItem = styled.div`
  */
 const Gap16 = styled.div`
   padding: 16px;
+`
+
+/**
+ * 스타일이 적용된 8px 간격
+ */
+const Gap8 = styled.div`
+  padding: 8px;
 `
 
 /**
@@ -113,7 +122,7 @@ const SetRight = styled.div`
  * 스타일이 적용된 ID 박스
  */
 const IDBox = styled.div`
-  margin-left: 40px;
+  padding: 16px;
 `
 
 /**
@@ -178,140 +187,161 @@ export default function Project() {
     <></>
   ) : (
     <RootContainer>
-      {tests.length > 0 ? (
-        <Container>
-          <TopMenuContainer>
-            <TestsContainer>
-              {tests.map((t, i) => {
-                return i == selectedTest ? (
-                  <SelectedTestItem
-                    key={`${i}`}
+      <Gap16 />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+        <b style={{ fontSize: '18px', fontWeight: 'bold' }}>Task Suite</b>
+        <AddButton
+          text="Add Task Suite"
+          color='gray'
+          fontSize="14px"
+          height="30px"
+          borderRadius="12px"
+          width="150px"
+          onClick={() => {
+            setIsAddTestModal(true)
+          }}
+        />
+      </div>
+      {
+        tests.length > 0 ? (
+          <>
+            <Container>
+              <TopMenuContainer>
+                <TestsContainer>
+                  {tests.map((t, i) => {
+                    return i == selectedTest ? (
+                      <SelectedTestItem
+                        key={`${i}`}
+                        onClick={() => {
+                          navigate(`/${projectid}/${t.id}`)
+                          setSelectedTest(i)
+                        }}
+                      >
+                        {t.title ? t.title : `Task Suite${i + 1}`}
+                      </SelectedTestItem>
+                    ) : (
+                      <TestItem
+                        key={`${i}`}
+                        onClick={() => {
+                          navigate(`/${projectid}/${t.id}`)
+                          setSelectedTest(i)
+                        }}
+                      >
+                        {t.title ? t.title : `Task Suite${i + 1}`}
+                      </TestItem>
+                    )
+                  })}
+                </TestsContainer>
+                <OneInputModal
+                  sendInputValue={async (value) => {
+                    const docRef = await addTest(projectid || '', value)
+                    if (docRef) {
+                      alert('You have successfully added the Task Suite.')
+                      location.reload()
+                    } else {
+                      alert('Failed to add the Task Suite.')
+                    }
+                  }}
+                  isShowModal={isAddTestModal}
+                  setIsShowModal={setIsAddTestModal}
+                  label="Enter a title for the Task Suite you want to create."
+                  placeholder="Task Suite title"
+                  buttonText="Add Task Suite"
+                />
+              </TopMenuContainer>
+              <IDBox>
+                <b>{'ID: '}</b>
+                <GrayText>{testid}</GrayText>
+              </IDBox>
+            </Container>
+            <Gap16 />
+            <MainContainer>
+              <TasksContainer>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <b style={{ fontSize: '18px', fontWeight: 'bold' }}>Task</b>
+                  <AddButton
+                    text="Add Task"
+                    color='gray'
+                    fontSize="14px"
+                    height="30px"
+                    borderRadius="12px"
+                    width="150px"
                     onClick={() => {
-                      navigate(`/${projectid}/${t.id}`)
-                      setSelectedTest(i)
+                      setIsAddTaskModal(true)
                     }}
-                  >
-                    {t.title ? t.title : `Task Suite${i + 1}`}
-                  </SelectedTestItem>
-                ) : (
-                  <TestItem
-                    key={`${i}`}
-                    onClick={() => {
-                      navigate(`/${projectid}/${t.id}`)
-                      setSelectedTest(i)
-                    }}
-                  >
-                    {t.title ? t.title : `Task Suite${i + 1}`}
-                  </TestItem>
-                )
-              })}
-            </TestsContainer>
-            <AddButton
-              text="Add Task Suite"
-              color="gray"
-              onClick={() => {
-                setIsAddTestModal(true)
-              }}
-            />
-            <OneInputModal
-              sendInputValue={async (value) => {
-                const docRef = await addTest(projectid || '', value)
-                if (docRef) {
-                  alert('You have successfully added the Task Suite.')
-                  location.reload()
-                } else {
-                  alert('Failed to add the Task Suite.')
-                }
-              }}
-              isShowModal={isAddTestModal}
-              setIsShowModal={setIsAddTestModal}
-              label="Enter a title for the Task Suite you want to create."
-              placeholder="Task Suite title"
-              buttonText="Add Task Suite"
-            />
-          </TopMenuContainer>
-          <MainContainer>
-            <IDBox>
-              <b>{'ID: '}</b>
-              <GrayText>{testid}</GrayText>
-            </IDBox>
-            <TasksContainer>
-              <b>Tasks</b>
-              <Gap16 />
-              {tasks.length > 0 ? (
-                tasks.map((t, i) => (
-                  <Task
-                    key={i}
-                    id={t.id}
-                    log={t.log}
-                    title={t.title}
-                    launchedAt={t.launchedAt}
-                    modifiedAt={t.modifiedAt}
                   />
-                ))
-              ) : (
-                <div>{'No Tasks Found'}</div>
-              )}
-            </TasksContainer>
-            <SetRight>
-              <AddButton
-                text="Add Task"
-                color="gray"
-                onClick={() => {
-                  setIsAddTaskModal(true)
-                }}
-              />
-              <OneInputModal
-                sendInputValue={async (value) => {
-                  const docRef = await addTask(projectid || '', testid || '', value)
-                  if (docRef) {
-                    alert('You have successfully added the task.')
-                    location.reload()
-                  } else {
-                    alert('Failed to add the task.')
-                  }
-                }}
-                isShowModal={isAddTaskModal}
-                setIsShowModal={setIsAddTaskModal}
-                label="Enter a title for the task you want to create."
-                placeholder="task title"
-                buttonText="Add Task"
-              />
-            </SetRight>
-          </MainContainer>
-        </Container>
-      ) : (
-        <div>
-          <TopMenuContainer style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <>
-              <AddButton
-                text="Add Task Suite"
-                color="gray"
-                onClick={() => {
-                  setIsAddTestModal(true)
-                }}
-              />
-              <OneInputModal
-                sendInputValue={async (value) => {
-                  const docRef = await addTest(projectid || '', value)
-                  if (docRef) {
-                    alert('You have successfully added the Task Suite.')
-                    location.reload()
-                  } else {
-                    alert('Failed to add the Task Suite.')
-                  }
-                }}
-                isShowModal={isAddTestModal}
-                setIsShowModal={setIsAddTestModal}
-                label="Enter a title for the Task Suite you want to create."
-                placeholder="Task Suite title"
-                buttonText="Add Task Suite"
-              />
-            </>
-          </TopMenuContainer>
-          <CenterText style={{ marginTop: '20px' }}>Not Found</CenterText>
-        </div>
-      )}
-    </RootContainer>
+                </div>
+                {tasks.length > 0 ? (
+                  tasks.map((t, i) => (
+                    <>
+                      <Task
+                        key={i}
+                        id={t.id}
+                        log={t.log}
+                        title={t.title}
+                        launchedAt={t.launchedAt}
+                        modifiedAt={t.modifiedAt}
+                      />
+                      <Gap8 />
+                    </>
+                  ))
+                ) : (
+                  <div>{'No Tasks Found'}</div>
+                )}
+              </TasksContainer>
+              <SetRight>
+                <OneInputModal
+                  sendInputValue={async (value) => {
+                    const docRef = await addTask(projectid || '', testid || '', value)
+                    if (docRef) {
+                      alert('You have successfully added the task.')
+                      location.reload()
+                    } else {
+                      alert('Failed to add the task.')
+                    }
+                  }}
+                  isShowModal={isAddTaskModal}
+                  setIsShowModal={setIsAddTaskModal}
+                  label="Enter a title for the task you want to create."
+                  placeholder="task title"
+                  buttonText="Add Task"
+                />
+              </SetRight>
+            </MainContainer>
+          </>
+        ) : (
+          <div>
+            <TopMenuContainer style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <>
+                <AddButton
+                  text="Add Task Suite"
+                  color="gray"
+                  onClick={() => {
+                    setIsAddTestModal(true)
+                  }}
+                />
+                <OneInputModal
+                  sendInputValue={async (value) => {
+                    const docRef = await addTest(projectid || '', value)
+                    if (docRef) {
+                      alert('You have successfully added the Task Suite.')
+                      location.reload()
+                    } else {
+                      alert('Failed to add the Task Suite.')
+                    }
+                  }}
+                  isShowModal={isAddTestModal}
+                  setIsShowModal={setIsAddTestModal}
+                  label="Enter a title for the Task Suite you want to create."
+                  placeholder="Task Suite title"
+                  buttonText="Add Task Suite"
+                />
+              </>
+            </TopMenuContainer>
+            <CenterText style={{ marginTop: '20px' }}>Not Found</CenterText>
+          </div>
+        )
+      }
+    </RootContainer >
   )
 }
