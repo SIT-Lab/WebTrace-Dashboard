@@ -9,6 +9,7 @@ import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
 const LogContainer = styled.table`
   border: 1px solid ${COLORS.gray02};
   width: 100%; 
+  height: 100%;
   border-collapse: collapse;
 `
 
@@ -44,48 +45,49 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
     return (
         <LogContainer>
             {isShowMenuInLogTable.id ? <LogHeader>id</LogHeader> : null}
-            {isShowMenuInLogTable.eventName ? <LogHeader>event name</LogHeader> : null}
+            {isShowMenuInLogTable.eventType ? <LogHeader>event type</LogHeader> : null}
             {/* {isShowMenuInLogTable.nodeName ? <LogHeader>nodeName</LogHeader> : null} */}
-            {isShowMenuInLogTable.url ? <LogHeader>url</LogHeader> : null}
             {isShowMenuInLogTable.time ? <LogHeader>event time</LogHeader> : null}
-            {isShowMenuInLogTable.wheelState || isShowMenuInLogTable.KeyboardEventState ? <LogHeader>state</LogHeader> : null}
-            {isShowMenuInLogTable.wheelDirection ? <LogHeader>wheel direction</LogHeader> : null}
-            {isShowMenuInLogTable.whxy ? <LogHeader>(width, height, x , y)</LogHeader> : null}
+            {isShowMenuInLogTable.url ? <LogHeader>url</LogHeader> : null}
             {isShowMenuInLogTable.xpath ? <LogHeader>xpath</LogHeader> : null}
+            {isShowMenuInLogTable.whxy ? <LogHeader>(width, height, x , y)</LogHeader> : null}
             {isShowMenuInLogTable.imageUrl ? <LogHeader>screenshot</LogHeader> : null}
-            {isShowMenuInLogTable.KeyboardEventPressedKey ? <LogHeader>pressed key</LogHeader> : null}
-            {isShowMenuInLogTable.KeyboardEventKeyCode ? <LogHeader>key code</LogHeader> : null}
+            {isShowMenuInLogTable.scrollState || isShowMenuInLogTable.keyboardInputState ? <LogHeader>event state</LogHeader> : null}
+            {/* {isShowMenuInLogTable.scrollDirection ? <LogHeader>scroll direction</LogHeader> : null} */}
+            {isShowMenuInLogTable.keyboardInputPressedKey ? <LogHeader>pressed key</LogHeader> : null}
+            {isShowMenuInLogTable.keyboardInputKeyCode ? <LogHeader>key code</LogHeader> : null}
 
             {logArray.length > 0 ? (
                 logArray.map((l: LogData, i) => {
                     return (
                         <LogColumn key={`${i}`}>
                             {isShowMenuInLogTable.id ? <LogRow>{i}</LogRow> : null}
-                            {isShowMenuInLogTable.eventName ? <LogRow>{l.eventName}</LogRow> : null}
-                            {/* {isShowMenuInLogTable.nodeName ? <LogRow>{l.nodeName}</LogRow> : null} */}
-                            {isShowMenuInLogTable.url ? <LogRow>{l.url}</LogRow> : null}
-                            {/* {isShowMenuInLogTable.time ? <LogRow><TimeDisplay time={l.time} /></LogRow> : null} */}
+                            {isShowMenuInLogTable.eventType ? <LogRow>{l.eventType}</LogRow> : null}
                             {isShowMenuInLogTable.time ? <LogRow>{formatTime(l.time)}</LogRow> : null}
-                            {isShowMenuInLogTable.wheelState || isShowMenuInLogTable.KeyboardEventState ? (
-                                <LogRow>
-                                    {l.wheelState !== undefined ? `${l.wheelState}` : ""}
-                                    {l.KeyboardEventState !== undefined ? `${l.KeyboardEventState}` : ""}
-                                </LogRow>
-                            ) : null}
-                            {isShowMenuInLogTable.wheelDirection ? <LogRow>{`${l.wheelDirection}`}</LogRow> : null}
-                            {isShowMenuInLogTable.whxy ? <LogRow>{`(${l.w}, ${l.h}, ${l.x}, ${l.y})`}</LogRow> : null}
+                            {isShowMenuInLogTable.url ? <LogRow>{l.url}</LogRow> : null}
                             {isShowMenuInLogTable.xpath ? <LogRow>{l.xpath}</LogRow> : null}
+                            {isShowMenuInLogTable.whxy ? <LogRow>{`(${l.w}, ${l.h}, ${l.x}, ${l.y})`}</LogRow> : null}
                             {isShowMenuInLogTable.imageUrl ? (
                                 <LogRow>
                                     {l.imageUrl ? (
-                                        <StyledImage src={l.imageUrl} alt="Log Image" />
+                                        l.imageUrl === "screenshot capture failed" ? (
+                                            "screenshot capture failed" // imageUrl이 "screenshot capture failed"이라면 그대로 출력
+                                        ) : (
+                                            <StyledImage src={l.imageUrl} alt="Log Image" /> // 그렇지 않으면 이미지를 표시
+                                        )
                                     ) : (
-                                        " " // 이미지가 없을 경우 공백 문자 표시
+                                        "-" // imageUrl이 없을 경우 "-"
                                     )}
                                 </LogRow>
                             ) : null}
-                            {isShowMenuInLogTable.KeyboardEventPressedKey ? <LogRow>{`${l.KeyboardEventPressedKey}`}</LogRow> : null}
-                            {isShowMenuInLogTable.KeyboardEventKeyCode ? <LogRow>{`${l.KeyboardEventKeyCode}`}</LogRow> : null}
+                            {isShowMenuInLogTable.scrollState || isShowMenuInLogTable.keyboardInputState ? (
+                                <LogRow>
+                                    {l.scrollState !== undefined ? l.scrollState : l.keyboardInputState !== undefined ? l.keyboardInputState : '-'}
+                                </LogRow>
+                            ) : null}
+                            {/* {isShowMenuInLogTable.scrollDirection ? <LogRow>{`${l.scrollDirection}`}</LogRow> : null} */}
+                            {isShowMenuInLogTable.keyboardInputPressedKey ? <LogRow>{l.keyboardInputPressedKey || '-'}</LogRow> : null}
+                            {isShowMenuInLogTable.keyboardInputKeyCode ? <LogRow>{l.keyboardInputKeyCode || '-'}</LogRow> : null}
                         </LogColumn>
                     )
                 })

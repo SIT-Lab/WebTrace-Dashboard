@@ -116,7 +116,7 @@ function Task(props: TaskData) {
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [isShowLog, setIsShowLog] = useState<boolean>(false)
   const [showLogIndex, setShowLogIndex] = useState<number>(0)
-  const { projectid, testid } = useParams()
+  const { projectid, tasksuiteid } = useParams()
 
   return (
     <Root>
@@ -137,11 +137,11 @@ function Task(props: TaskData) {
             </InfoLine>
             <InfoLine>
               <span>
-                <span style={{ fontWeight: 'bold' }}>modified at: </span>
+                <span style={{ fontWeight: 'bold' }}>Modified At: </span>
                 <GrayText>{formatTimestamp(props.modifiedAt)}</GrayText>
               </span>
               <PadLeft16>
-                <span style={{ fontWeight: 'bold' }}>launched at: </span>
+                <span style={{ fontWeight: 'bold' }}>Launched At: </span>
                 <GrayText>{formatTimestamp(props.launchedAt)}</GrayText>
               </PadLeft16>
             </InfoLine>
@@ -151,17 +151,17 @@ function Task(props: TaskData) {
             iconPath={deleteIcon}
             onClick={async (e) => {
               e.stopPropagation()
-              console.log(`Project ID: ${projectid}, Test ID: ${testid}`) // 여기서 ID 값 출력
+              console.log(`Project ID: ${projectid}, Task Suite ID: ${tasksuiteid}`) // 여기서 ID 값 출력
               const response = confirm('Do you want to permanently delete the task?')
               if (response) {
-                if (projectid && testid) {
-                  if (await deleteTask(projectid, testid, props.id)) {
+                if (projectid && tasksuiteid) {
+                  if (await deleteTask(projectid, tasksuiteid, props.id)) {
                     alert('You have successfully deleted the task.')
                   } else {
                     alert('Failed to delete the task.')
                   }
                 } else {
-                  alert('Failed to delete the task. You dont have right projectId and testId')
+                  alert('Failed to delete the task. You dont have right projectId and tasksuiteid')
                 }
               }
             }}

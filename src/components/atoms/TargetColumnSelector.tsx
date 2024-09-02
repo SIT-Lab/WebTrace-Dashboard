@@ -46,12 +46,12 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target
 
-    if (name === 'state') {
-      // state 체크박스를 변경하면 wheelState와 KeyboardEventState를 함께 변경
+    if (name === 'event state') {
+      // event state 체크박스를 변경하면 scrollState와 keyboardInputState를 함께 변경
       setIsShowMenuInLogTable((prevState) => ({
         ...prevState,
-        wheelState: checked,
-        KeyboardEventState: checked,
+        scrollState: checked,
+        keyboardInputState: checked,
         state: checked,
       }))
     } else if (name in isShowMenuInLogTable) {
@@ -65,9 +65,9 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
   return (
     <div>
       <StyledFieldset>
-        <legend>표시할 데이터를 선택하세요</legend>
+        <legend><b>Select Fields to Display</b></legend>
 
-        <CheckboxWrapper>
+        {/* <CheckboxWrapper>
           <input
             type="checkbox"
             name="abstract"
@@ -76,7 +76,7 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
             onChange={handleCheckboxChange}
           />
           <label>abstract</label>
-        </CheckboxWrapper>
+        </CheckboxWrapper> */}
 
         <CheckboxWrapper>
           <input
@@ -92,23 +92,12 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
         <CheckboxWrapper>
           <input
             type="checkbox"
-            name="eventName"
-            value="eventName"
-            checked={isShowMenuInLogTable.eventName}
+            name="eventType"
+            value="eventType"
+            checked={isShowMenuInLogTable.eventType}
             onChange={handleCheckboxChange}
           />
-          <label>event name</label>
-        </CheckboxWrapper>
-
-        <CheckboxWrapper>
-          <input
-            type="checkbox"
-            name="xpath"
-            value="xpath"
-            checked={isShowMenuInLogTable.xpath}
-            onChange={handleCheckboxChange}
-          />
-          <label>xpath</label>
+          <label>event type</label>
         </CheckboxWrapper>
 
         <CheckboxWrapper>
@@ -119,7 +108,7 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
             checked={isShowMenuInLogTable.time}
             onChange={handleCheckboxChange}
           />
-          <label>time</label>
+          <label>event time</label>
         </CheckboxWrapper>
 
         <CheckboxWrapper>
@@ -136,24 +125,39 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
         <CheckboxWrapper>
           <input
             type="checkbox"
-            name="state"
-            value="state"
-            checked={isShowMenuInLogTable.wheelState && isShowMenuInLogTable.KeyboardEventState}
+            name="xpath"
+            value="xpath"
+            checked={isShowMenuInLogTable.xpath}
             onChange={handleCheckboxChange}
           />
-          <label>state</label>
+          <label>xpath</label>
         </CheckboxWrapper>
+
+
+
+
 
         <CheckboxWrapper>
           <input
             type="checkbox"
-            name="wheelDirection"
-            value="wheelDirection"
-            checked={isShowMenuInLogTable.wheelDirection}
+            name="event state"
+            value="event state"
+            checked={isShowMenuInLogTable.scrollState && isShowMenuInLogTable.keyboardInputState}
             onChange={handleCheckboxChange}
           />
-          <label>wheel direction</label>
+          <label>event state</label>
         </CheckboxWrapper>
+
+        {/* <CheckboxWrapper>
+          <input
+            type="checkbox"
+            name="scrollDirection"
+            value="scrollDirection"
+            checked={isShowMenuInLogTable.scrollDirection}
+            onChange={handleCheckboxChange}
+          />
+          <label>scroll direction</label>
+        </CheckboxWrapper> */}
 
 
         <CheckboxWrapper>
@@ -181,9 +185,9 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
         <CheckboxWrapper>
           <input
             type="checkbox"
-            name="KeyboardEventPressedKey"
-            value="KeyboardEventPressedKey"
-            checked={isShowMenuInLogTable.KeyboardEventPressedKey}
+            name="keyboardInputPressedKey"
+            value="keyboardInputPressedKey"
+            checked={isShowMenuInLogTable.keyboardInputPressedKey}
             onChange={handleCheckboxChange}
           />
           <label>pressed key</label>
@@ -192,9 +196,9 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
         <CheckboxWrapper>
           <input
             type="checkbox"
-            name="KeyboardEventKeyCode"
-            value="KeyboardEventKeyCode"
-            checked={isShowMenuInLogTable.KeyboardEventKeyCode}
+            name="keyboardInputKeyCode"
+            value="keyboardInputKeyCode"
+            checked={isShowMenuInLogTable.keyboardInputKeyCode}
             onChange={handleCheckboxChange}
           />
           <label>key code</label>

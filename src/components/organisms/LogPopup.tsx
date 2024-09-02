@@ -115,20 +115,19 @@ interface LogPopupProps {
  */
 function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
   const [isShowMenuInLogTable, setIsShowMenuInLogTable] = useState<ShowMenuInLogTable>({
-    abstract: true,
     id: true,
-    eventName: true,
+    eventType: true,
     // nodeName: true,
     url: true,
     time: true,
-    wheelState: true,
-    wheelDirection: true,
+    scrollState: true,
+    scrollDirection: true,
     whxy: true,
     xpath: true,
     imageUrl: true,
-    KeyboardEventState: true,
-    KeyboardEventPressedKey: true,
-    KeyboardEventKeyCode: true,
+    keyboardInputState: true,
+    keyboardInputPressedKey: true,
+    keyboardInputKeyCode: true,
   })
 
   const [isAbstract, setIsAbstract] = useState<boolean>(false)

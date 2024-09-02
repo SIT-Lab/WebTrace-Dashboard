@@ -1,9 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { TestData } from '../../interfaces/apiTypes'
+import { TaskSuiteData } from '../../interfaces/apiTypes'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { addTask, addTest, getTests } from '../../service/apiClient'
+import { addTask, addTaskSuite, getTaskSuites } from '../../service/apiClient'
 import { styled } from 'styled-components'
 import { COLORS } from '../../styles/colors'
 import { getTasks } from '../../service/apiClient'
@@ -52,9 +52,9 @@ const TopMenuContainer = styled.div`
 `
 
 /**
- * 스타일이 적용된 test 컨테이너
+ * 스타일이 적용된 Task Suite 컨테이너
  */
-const TestsContainer = styled.div`
+const TaskSuiteContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -68,17 +68,17 @@ const TasksContainer = styled.div`
 `
 
 /**
- * 스타일이 적용된 Test Item
+ * 스타일이 적용된 TaskSuite Item
  */
-const TestItem = styled.div`
+const TaskSuiteItem = styled.div`
   padding: 8px;
   margin: 8px;
 `
 
 /**
- * 스타일이 적용된 선택된 Test Item
+ * 스타일이 적용된 선택된 TaskSuite Item
  */
-const SelectedTestItem = styled.div`
+const SelectedTaskSuiteItem = styled.div`
   padding: 8px;
   margin: 8px;
   border-bottom: 2px solid ${COLORS.gray02};
@@ -136,12 +136,12 @@ const GrayText = styled.span`
  * Project 컴포넌트
  */
 export default function Project() {
-  const { projectid, testid } = useParams()
-  const [selectedTest, setSelectedTest] = useState<number>(0)
-  const [tests, setTests] = useState<TestData[]>([])
+  const { projectid, tasksuiteid } = useParams()
+  const [selectedTaskSuite, setSelectedTaskSuite] = useState<number>(0)
+  const [TaskSuites, setTaskSuites] = useState<TaskSuiteData[]>([])
   const [tasks, setTasks] = useState<TaskData[]>([])
   const [loading, setLoading] = useState(true)
-  const [isAddTestModal, setIsAddTestModal] = useState(false)
+  const [isAddTaskSuiteModal, setIsAddTaskSuiteModal] = useState(false)
   const [isAddTaskModal, setIsAddTaskModal] = useState(false)
 
   const navigate = useNavigate()
@@ -152,14 +152,14 @@ export default function Project() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const testsData = await getTests(projectid || '')
-        setTests(testsData)
-        if (!testid) {
-          navigate(`/${projectid}/${testsData[0]?.id}`)
+        const TaskSuiteData = await getTaskSuites(projectid || '')
+        setTaskSuites(TaskSuiteData)
+        if (!tasksuiteid) {
+          navigate(`/${projectid}/${TaskSuiteData[0]?.id}`)
         }
       } catch (error) {
         console.error('Error fetching projects:', error)
-        setTests([])
+        setTaskSuites([])
       }
     }
     fetchProjects()
@@ -171,7 +171,7 @@ export default function Project() {
   useEffect(() => {
     async function fetchTasks() {
       try {
-        const tasksData = await getTasks(projectid || '', testid || '')
+        const tasksData = await getTasks(projectid || '', tasksuiteid || '')
         setTasks(tasksData)
         setLoading(false)
       } catch (error) {
@@ -181,7 +181,7 @@ export default function Project() {
       }
     }
     fetchTasks()
-  }, [projectid, testid])
+  }, [projectid, tasksuiteid])
 
   return loading ? (
     <></>
@@ -198,43 +198,43 @@ export default function Project() {
           borderRadius="12px"
           width="150px"
           onClick={() => {
-            setIsAddTestModal(true)
+            setIsAddTaskSuiteModal(true)
           }}
         />
       </div>
       {
-        tests.length > 0 ? (
+        TaskSuites.length > 0 ? (
           <>
             <Container>
               <TopMenuContainer>
-                <TestsContainer>
-                  {tests.map((t, i) => {
-                    return i == selectedTest ? (
-                      <SelectedTestItem
+                <TaskSuiteContainer>
+                  {TaskSuites.map((t, i) => {
+                    return i == selectedTaskSuite ? (
+                      <SelectedTaskSuiteItem
                         key={`${i}`}
                         onClick={() => {
                           navigate(`/${projectid}/${t.id}`)
-                          setSelectedTest(i)
+                          setSelectedTaskSuite(i)
                         }}
                       >
                         {t.title ? t.title : `Task Suite${i + 1}`}
-                      </SelectedTestItem>
+                      </SelectedTaskSuiteItem>
                     ) : (
-                      <TestItem
+                      <TaskSuiteItem
                         key={`${i}`}
                         onClick={() => {
                           navigate(`/${projectid}/${t.id}`)
-                          setSelectedTest(i)
+                          setSelectedTaskSuite(i)
                         }}
                       >
                         {t.title ? t.title : `Task Suite${i + 1}`}
-                      </TestItem>
+                      </TaskSuiteItem>
                     )
                   })}
-                </TestsContainer>
+                </TaskSuiteContainer>
                 <OneInputModal
                   sendInputValue={async (value) => {
-                    const docRef = await addTest(projectid || '', value)
+                    const docRef = await addTaskSuite(projectid || '', value)
                     if (docRef) {
                       alert('You have successfully added the Task Suite.')
                       location.reload()
@@ -242,8 +242,8 @@ export default function Project() {
                       alert('Failed to add the Task Suite.')
                     }
                   }}
-                  isShowModal={isAddTestModal}
-                  setIsShowModal={setIsAddTestModal}
+                  isShowModal={isAddTaskSuiteModal}
+                  setIsShowModal={setIsAddTaskSuiteModal}
                   label="Enter a title for the Task Suite you want to create."
                   placeholder="Task Suite title"
                   buttonText="Add Task Suite"
@@ -251,7 +251,7 @@ export default function Project() {
               </TopMenuContainer>
               <IDBox>
                 <b>{'ID: '}</b>
-                <GrayText>{testid}</GrayText>
+                <GrayText>{tasksuiteid}</GrayText>
               </IDBox>
             </Container>
             <Gap16 />
@@ -292,7 +292,7 @@ export default function Project() {
               <SetRight>
                 <OneInputModal
                   sendInputValue={async (value) => {
-                    const docRef = await addTask(projectid || '', testid || '', value)
+                    const docRef = await addTask(projectid || '', tasksuiteid || '', value)
                     if (docRef) {
                       alert('You have successfully added the task.')
                       location.reload()
@@ -311,18 +311,18 @@ export default function Project() {
           </>
         ) : (
           <div>
-            <TopMenuContainer style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            {/* <TopMenuContainer style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <>
                 <AddButton
                   text="Add Task Suite"
                   color="gray"
                   onClick={() => {
-                    setIsAddTestModal(true)
+                    setIsAddTaskSuiteModal(true)
                   }}
                 />
                 <OneInputModal
                   sendInputValue={async (value) => {
-                    const docRef = await addTest(projectid || '', value)
+                    const docRef = await addTaskSuite(projectid || '', value)
                     if (docRef) {
                       alert('You have successfully added the Task Suite.')
                       location.reload()
@@ -330,14 +330,14 @@ export default function Project() {
                       alert('Failed to add the Task Suite.')
                     }
                   }}
-                  isShowModal={isAddTestModal}
-                  setIsShowModal={setIsAddTestModal}
+                  isShowModal={isAddTaskSuiteModal}
+                  setIsShowModal={setIsAddTaskSuiteModal}
                   label="Enter a title for the Task Suite you want to create."
                   placeholder="Task Suite title"
                   buttonText="Add Task Suite"
                 />
               </>
-            </TopMenuContainer>
+            </TopMenuContainer> */}
             <CenterText style={{ marginTop: '20px' }}>Not Found</CenterText>
           </div>
         )

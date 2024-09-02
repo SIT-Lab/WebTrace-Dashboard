@@ -1,4 +1,4 @@
-import { ProjectData, TaskData, TestData } from '../interfaces/apiTypes'
+import { ProjectData, TaskData, TaskSuiteData } from '../interfaces/apiTypes'
 import {
   query,
   collection,
@@ -15,12 +15,12 @@ import { db } from './firebaseConfig'
 /**
  * 입력으로 주어진 ID값 document의 경로를를 반환합니다.
  * @param projectID string - Task가 위치한 프로젝트 id
- * @param testID string - Task가 위치한 테스트 id
+ * @param taskSuiteID string - Task가 위치한 task suite id
  * @param taskID string - Task id
  * @returns DocumentReference
  */
-const getTaskRef = async (projectID: string, testID: string, taskID: string): Promise<any> => {
-  return doc(db, `project/${projectID}/test/${testID}/task/${taskID}`)
+const getTaskRef = async (projectID: string, taskSuiteID: string, taskID: string): Promise<any> => {
+  return doc(db, `project/${projectID}/taskSuite/${taskSuiteID}/task/${taskID}`)
 }
 
 /**
@@ -53,17 +53,17 @@ export const getProjects = async (ownerID: string): Promise<ProjectData[]> => {
 }
 
 /**
- * 프로젝트 내부의의 테스트 목록을 불러옵니다.
+ * 프로젝트 내부의의 task suite 목록을 불러옵니다.
  * @param projectID string - 불러올 프로젝트의 ID
- * @returns Promise<TestData[]> - 불러온 테스트 목록
+ * @returns Promise<TaskSuiteData[]> - 불러온 task suite 목록
  */
-export const getTests = async (projectID: string): Promise<TestData[]> => {
+export const getTaskSuites = async (projectID: string): Promise<TaskSuiteData[]> => {
   try {
-    const collectionRef = collection(db, `project/${projectID}/test/`)
+    const collectionRef = collection(db, `project/${projectID}/taskSuite/`)
     const querySnapshot = await getDocs(collectionRef)
-    const processedDataList: TestData[] = []
+    const processedDataList: TaskSuiteData[] = []
     querySnapshot.forEach((doc) => {
-      const data: TestData = {
+      const data: TaskSuiteData = {
         id: doc.id,
         title: doc.data()?.title,
       }
@@ -71,20 +71,20 @@ export const getTests = async (projectID: string): Promise<TestData[]> => {
     })
     return processedDataList
   } catch (err) {
-    console.log('getTests error : ' + err)
+    console.log('getTaskSuites error : ' + err)
     return [] // Return an empty array in case of an error
   }
 }
 
 /**
- * 해당 Test의 Task목록을 불러옵니다.
- * @param projectID string - Test가 위치한 Project의 ID
- * @param testID string - Task가 위치한 Test의 ID
+ * 해당 Task Suite의 Task목록을 불러옵니다.
+ * @param projectID string - Task Suite가 위치한 Project의 ID
+ * @param taskSuiteID string - Task가 위치한 Task suite ID
  * @returns Promise<TaskData[]> - 불러온 Task 목록
  */
-export const getTasks = async (projectID: string, testID: string): Promise<TaskData[]> => {
+export const getTasks = async (projectID: string, taskSuiteID: string): Promise<TaskData[]> => {
   try {
-    const collectionRef = collection(db, `project/${projectID}/test/${testID}/task`)
+    const collectionRef = collection(db, `project/${projectID}/taskSuite/${taskSuiteID}/task`)
     const querySnapshot = await getDocs(collectionRef)
     const processedDataList: TaskData[] = []
 
@@ -155,24 +155,24 @@ export const addProject = (ownerId: string, title: string) => {
 }
 
 /**
- * 입력받은 프로젝트 ID 경로에 빈 테스트를 생성합니다.
+ * 입력받은 프로젝트 ID 경로에 빈 task suite를 생성합니다.
  * @param proejctId string - 프로젝트 ID
- * @param title string - 테스트명
+ * @param title string - task suite 명
  * @returns `DocumentReference<any, DocumentData> | null` - 성공 시 documentReference 반환, 실패 시 null
  */
-export const addTest = async (projectId: string, title: string) => {
-  return await addByRef(`project/${projectId}/test`, { title: title })
+export const addTaskSuite = async (projectId: string, title: string) => {
+  return await addByRef(`project/${projectId}/taskSuite`, { title: title })
 }
 
 /**
- * 입력받은 프로젝트 ID, 테스트 ID 경로에 빈 태스크를 생성합니다.
+ * 입력받은 프로젝트 ID, task suite ID 경로에 빈 태스크를 생성합니다.
  * @param proejctId string - 프로젝트 ID
- * @param testId string - 테스트 ID
+ * @param taskSuiteID string - task suite ID
  * @param title string - 태스크명
  * @returns `DocumentReference<any, DocumentData> | null` - 성공 시 documentReference 반환, 실패 시 null
  */
-export const addTask = async (projectId: string, testId: string, title: string) => {
-  return await addByRef(`project/${projectId}/test/${testId}/task`, {
+export const addTask = async (projectId: string, taskSuiteID: string, title: string) => {
+  return await addByRef(`project/${projectId}/taskSuite/${taskSuiteID}/task`, {
     launchedAt: Timestamp.now(),
     modifiedAt: Timestamp.now(),
     log: [],
@@ -191,22 +191,22 @@ export const deleteProject = async (projectId: string) => {
 }
 
 /**
- * 입력받은 ID의 테스트를 제거합니다.
- * @param projectId string - 테스트가 위치한 프로젝트의 ID
- * @param testId string - 테스트 ID
+ * 입력받은 ID의 task suite를 제거합니다.
+ * @param projectId string - task suite가 위치한 프로젝트의 ID
+ * @param taskSuiteID string - Task Suite ID
  * @returns boolean - 성공 여부
  */
-export const deleteTest = async (projectId: string, testId: string) => {
-  return await deleteByRef(`project/${projectId}/test/${testId}`)
+export const deleteTaskSuite = async (projectId: string, taskSuiteID: string) => {
+  return await deleteByRef(`project/${projectId}/taskSuite/${taskSuiteID}`)
 }
 
 /**
  * 입력받은 ID의 태스크를 제거합니다.
  * @param projectId string - 태스크가 위치한 프로젝트의 ID
- * @param testId string - 태스크가 위치한 테스트의 ID
+ * @param taskSuiteID string - 태스크가 위치한 task suite ID
  * @param taskId string - 태스크의 ID
  * @returns boolean - 성공 여부
  */
-export const deleteTask = async (projectId: string, testId: string, taskId: string) => {
-  return await deleteByRef(`project/${projectId}/test/${testId}/task/${taskId}`)
+export const deleteTask = async (projectId: string, taskSuiteID: string, taskId: string) => {
+  return await deleteByRef(`project/${projectId}/taskSuite/${taskSuiteID}/task/${taskId}`)
 }

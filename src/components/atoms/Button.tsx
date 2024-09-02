@@ -7,14 +7,23 @@ import { CSSProperties } from 'react'
  */
 type ButtonClickEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>
 
-const Container = styled.button`
-  color: #43454e;
-  background-color: #f4f7fa;
+/**
+ * 스타일이 적용된 버튼 컴포넌트
+ */
+const Container = styled.button<{
+  bgColor?: string
+  textColor?: string
+  fontSize?: string
+  borderRadius?: string
+}>`
+  color: ${({ textColor }) => textColor || '#43454e'};
+  background-color: ${({ bgColor }) => bgColor || '#f4f7fa'};
   border: none;
-  border-radius: 8px;
+  border-radius: ${({ borderRadius }) => borderRadius || '8px'};
   padding: 8px;
   cursor: pointer;
   height: fit-content;
+  font-size: ${({ fontSize }) => fontSize || 'inherit'};
 `
 
 /**
@@ -25,6 +34,9 @@ interface ButtonProps {
   children?: ReactNode
   fontSize?: string
   style?: CSSProperties
+  bgColor?: string
+  textColor?: string
+  borderRadius?: string
   onClick: (event: ButtonClickEvent) => void
 }
 
@@ -34,11 +46,31 @@ interface ButtonProps {
  * @param {ReactNode} [children] - 버튼의 자식 요소 (선택적)
  * @param {string} [fontSize] - 텍스트의 폰트 크기 (선택적)
  * @param {CSSProperties} [style] - 추가적인 스타일 (선택적)
+ * @param {string} [bgColor] - 버튼의 배경색 (선택적)
+ * @param {string} [textColor] - 버튼의 글자색 (선택적)
+ * @param {string} [borderRadius] - 버튼의 테두리 반경 (선택적)
  * @param {function} onClick - 버튼 클릭 이벤트 핸들러
  */
-export const Button = ({ children, text, fontSize, onClick }: ButtonProps) => {
+export const Button = ({
+  children,
+  text,
+  fontSize,
+  bgColor,
+  textColor,
+  borderRadius,
+  style,
+  onClick,
+}: ButtonProps) => {
   return (
-    <Container type="button" onClick={onClick}>
+    <Container
+      type="button"
+      onClick={onClick}
+      fontSize={fontSize}
+      bgColor={bgColor}
+      textColor={textColor}
+      borderRadius={borderRadius}
+      style={style}
+    >
       {text ? <span>{text}</span> : children}
     </Container>
   )
