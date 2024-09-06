@@ -18,6 +18,24 @@ export interface SideMenuProps {
 }
 
 /**
+ * LogoIcon: 로고 아이콘의 스타일
+ */
+const LogoIcon = styled.div`
+  width: 60px;
+  height: 60px;
+  background-color: ${COLORS.primary_purple}; // 보라색 배경
+  border-radius: 50%; // 동그랗게 만들기
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 60px; // 아이콘 크기를 줄이기
+    height: 60px;
+    filter: brightness(0) invert(1); // 아이콘을 흰색으로 변환
+  }
+`
+
+/**
  * Container: 사이드 메뉴 전체를 감싸는 컨테이너 스타일
  */
 const Container = styled.div`
@@ -50,6 +68,7 @@ const MenuItemBox = styled.div<{ isSelected: boolean }>`
 const Banner = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center; // 가로 정렬 시 세로 중앙 맞춤
   margin: 16px;
   cursor: pointer;
 `
@@ -59,7 +78,18 @@ const Banner = styled.div`
 const BannerText = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center; // 세로로 중앙 정렬
   padding-left: 12px;
+
+  // 각 span 사이에 간격을 추가
+  span {
+    margin-bottom: 4px; // 간격을 추가 (4px은 원하는 크기로 조정 가능)
+    font-weight: bold;  // 글씨를 볼드하게
+    font-size: 20px; 
+    &:last-child {
+      margin-bottom: 0; // 마지막 요소는 간격을 제거
+    }
+  }
 `
 /**
  * Gap16: 사이드 메뉴 내 요소 간의 간격을 위한 스타일
@@ -133,10 +163,12 @@ function SideMenu({ ownerID }: SideMenuProps) {
           navigate('/')  // 홈 화면으로 이동
         }}
       >
-        <img src={logoIcon} />
+        <LogoIcon>
+          <img src={logoIcon} alt="logo" />
+        </LogoIcon>
         <BannerText>
-          <span>Task Cov.</span>
-          <span>Admin Dashboard</span>
+          <span>WebTrace</span>
+          <span>Dashboard</span>
         </BannerText>
       </Banner>
       <Gap16 />
