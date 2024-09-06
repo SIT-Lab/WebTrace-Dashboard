@@ -13,12 +13,15 @@ function convertTimestampToDate(timestamp: { seconds: number; nanoseconds: numbe
 }
 
 /**
- * JavaScript Date 객체를 UTC 문자열로 형식화합니다.
- * @param date - 형식화할 Date 객체.
- * @returns ISO 형식의 날짜 문자열.
+ * 주어진 시간을 포맷된 문자열로 변환합니다.
+ * @param time - 포맷할 시간. 밀리초 단위의 숫자 또는 날짜 객체를 받아들입니다.
+ * @returns 포맷된 날짜 및 시간 문자열 (엑셀에서 문자열로 인식되도록 함).
  */
-function formatTimestampUTC(date: Date): string {
-  return date.toISOString()
+function formatTimeForExcel(time: any): string {
+  // 주어진 time을 Date 객체로 변환
+  const now = new Date(time)
+  const formattedTime = now.toISOString().replace('T', ' ').substring(0, 19) // 'YYYY-MM-DD HH:mm:ss' 형식으로 반환
+  return `="${formattedTime}"` // 엑셀에서 날짜가 아닌 문자열로 인식되도록 처리
 }
 
 /**
@@ -28,30 +31,30 @@ function formatTimestampUTC(date: Date): string {
  */
 function convertLogDataToCSV(data: LogData[]): string {
   const headerOrder = [
-    'eventType',
+    'event Type',
     'xpath',
-    'time',
+    'event time',
     'url',
     'hostName',
     'pathName',
-    // 'nodeName',
-    'scroll state',
-    // 'scroll direction',
+    'event State', // 새로 추가된 eventState 항목
     'w',
     'h',
     'x',
     'y',
     'imageUrl',
-    'keyboard input state',
     'pressed key',
     'key code',
-    'hash',
   ]
 
   const header = headerOrder.join(',')
 
-  const csvRows = data.map((log, index) => {
-    const formattedTime = log.time ? convertTimestampToDate(log.time) : ''
+  const csvRows = data.map((log) => {
+    const formattedTime = log.time ? formatTimeForExcel(convertTimestampToDate(log.time)) : ''
+
+    // eventState를 키보드 입력 상태와 스크롤 상태로 생성
+    const eventState = log.keyboardInputState || log.scrollState || ''
+
     return [
       log.eventType,
       log.xpath,
@@ -59,18 +62,14 @@ function convertLogDataToCSV(data: LogData[]): string {
       log.url,
       log.hostName,
       log.pathName,
-      // log.nodeName,
-      log.scrollState,
-      // log.scrollDirection,
+      eventState,
       log.w,
       log.h,
       log.x,
       log.y,
       log.imageUrl,
-      log.keyboardInputState,
       log.keyboardInputPressedKey,
       log.keyboardInputKeyCode,
-      log.hash,
     ].join(',')
   })
 
@@ -89,7 +88,8 @@ export function downloadLogDataCSV(data: LogData[], filename: string): void {
   }
   const csvContent = convertLogDataToCSV(data)
 
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  // UTF-8 BOM을 추가하여 한글 깨짐 방지
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
