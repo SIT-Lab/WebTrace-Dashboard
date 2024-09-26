@@ -1,4 +1,4 @@
-# <img src="public/icons/logo.png" width="45" align="left"> Sitlab Dashboard
+# <img src="public/icons/logo.png" width="45" align="left"> WebTrace Dashboard
 
 
 <p align="left">
@@ -7,73 +7,117 @@
   <img src="https://img.shields.io/badge/react-v18.2.0-61DAFB?logo=react" alt="react" />
 </p>
 
-Sitlab Dashboard는 전북대학교 소프트웨어 인터랙션 연구실에서 개발한 인터랙션 데이터 분석 도구입니다. 이 도구는 웹 애플리케이션 형태로 제공되며, 테스터는 웹에 접속하여 Project, Task Suite, Task를 추가, 삭제 및 확인할 수 있습니다.
 
-실험 참여자는 [SitLab Test Tracker](https://github.com/SIT-Lab/sitlab-test-tracker)를 통해 Test에 참여할 수 있으며, Test중 수집된 인터랙션 데이터는 파이어베이스에 저장됩니다. 저장된 마우스 휠 스크롤이나 긴 텍스트 입력과 같은 반복적인 인터랙션 데이터는 추상화를 거쳐 가독성이 향상된 데이터셋으로 재가공되며, SitLab Dashboard 애플리케이션을 통해 보여집니다. 결과적으로 테스터의 인터랙션 데이터 분석 효율성을 높이는 데 도움을 줍니다.
+The WebTrace Dashboard is a web-based tool for managing and analyzing user interaction data during remote usability tests. It enables testers to add, delete, and review Projects, Task Suites, and Tasks.
 
-## 👨🏼‍💻팀원
+ Test participants can engage in tests through [WebTrace Tracker](https://github.com/SIT-Lab/WebTrace-Tracker), where the interaction data collected during tests is stored in Firebase. repetitive interaction data, such as scrolls or long text inputs, is abstracted into more readable datasets. The WebTrace Dashboard offers these abstracted datasets, enhancing the efficiency of interaction data analysis for administrators.
+
+
+
+<!-- ## 👨🏼‍💻팀원
 | **편지승**  | **허민**    |
 |:-----------:|:-----------:|
 | <img src="https://avatars.githubusercontent.com/vuswltmd" height="130" width="130"></img> | <img src="https://avatars.githubusercontent.com/i-mymeminn" height="130" width="130"></img> |
 | <a href="https://github.com/vuswltmd" target="_blank"><img src="https://img.shields.io/badge/GitHub-black.svg?&style=round&logo=github&logoColor=white"/></a> | <a href="https://github.com/i-mymeminn" target="_blank"><img src="https://img.shields.io/badge/GitHub-black.svg?&style=round&logo=github&logoColor=white"/></a> |
-| <a href="mailto:sseung7367@jbnu.ac.kr" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?style=round&logo=Gmail&logoColor=white"/></a> | <a href="mailto:heomin02@jbnu.ac.kr" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?style=round&logo=Gmail&logoColor=white"/></a> |
+| <a href="mailto:sseung7367@jbnu.ac.kr" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?style=round&logo=Gmail&logoColor=white"/></a> | <a href="mailto:heomin02@jbnu.ac.kr" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?style=round&logo=Gmail&logoColor=white"/></a> | -->
 
-## 시스템 아키텍쳐
+<!-- ## Authors
+
+The WebTrace Dashboard was developed by the following team members from the Software Interaction Lab, Division of Computer Science and Engineering, Jeonbuk National University:
+
+| **Name**          | **GitHub**                                             | **Email**                              |
+|-------------------|--------------------------------------------------------|----------------------------------------|
+| **Ji-Seung Pyeon** | [vuswltmd](https://github.com/vuswltmd)               | [sseung7367@jbnu.ac.kr](mailto:sseung7367@jbnu.ac.kr) |
+| **Min Heo**        | [i-mymeminn](https://github.com/i-mymeminn)           | [heomin02@jbnu.ac.kr](mailto:heomin02@jbnu.ac.kr)     | -->
+<!-- ## 시스템 아키텍쳐
 
 <p align="center" >
   <img src="https://github.com/user-attachments/assets/754a4389-1bbf-4aee-ab8b-37c5513446e7" width="700" alt="image1" style=""/>
-</p>
+</p> -->
+## Getting Started
 
+### 1. Clone the Code
+  - Clone the project repository by running the following command:
+      ```sh
+      git clone https://github.com/SIT-Lab/WebTrace-Dashboard.git
+      ```
+### 2. Set Environment Variables:
+  - Create a `.env` file in the root directory of the project and add the Firebase SDK details as follows:
+      ```dosini
+      REACT_APP_FIREBASE_API_KEY=Your_Firebase_API_Key
+      REACT_APP_FIREBASE_AUTH_DOMAIN=Your_Firebase_Auth_Domain
+      REACT_APP_FIREBASE_PROJECT_ID=Your_Firebase_Project_ID
+      REACT_APP_FIREBASE_STORAGE_BUCKET=Your_Firebase_Storage_Bucket
+      REACT_APP_FIREBASE_MESSAGING_SENDER_ID=Your_Firebase_Messaging_Sender_ID
+      REACT_APP_FIREBASE_APP_ID=Your_Firebase_App_ID
+      REACT_APP_FIREBASE_MEASUREMENT_ID=Your_Firebase_Measurement_ID
+      ```
+### 3. Install Required Packages:
+  - Install the necessary dependencies by running:
+      ```sh
+      npm install
+      ```
+### 4. Run the Application:
+  - Start the application by running the following command:
+      ```sh
+      npm start
+      ```
+### 5. Access the Dashboard:
+  - Open your browser and go to: http://localhost:3000
+  - From here, you can run the WebTrace Dashboard.
 
-## 💿사용방법
+## Dashboard Features
 <p align="left" >
-  <img src="https://github.com/user-attachments/assets/e89f1808-e2ac-4ae7-97ab-50be7ac2f177" width="100%" alt="image1" style=""/>
+  <img src="https://github.com/user-attachments/assets/d507675b-010c-45dd-be88-d99ec3197666" width="100%" alt="image1" style=""/>
 
-  ### A. Task 프로젝트 목록
- 전체 프로젝트 목록을 보여줍니다.
-  - 원하는 프로젝트를 클릭하면 해당 프로젝트에 포함된 Task Suite를 확인할 수 있습니다.
+  ### A. Project List
+ Displays the complete list of projects.
+  - By clicking on a desired project, you can view the Task Suites included within that project.
 
 </p>
 
 <p align="left">
 
-  ### B. 프로젝트 추가버튼
-  프로젝트를 추가할 수 있는 버튼입니다
+  ### B. Add Project Button
+  The 'Add Project' button lets you add a new project.
   <div style="margin-left: 20px;">
     <p>
       <img src="https://github.com/user-attachments/assets/268bf128-766e-4573-8eff-fd2d9bbe9370" width="50%" alt="image2" style=""/>
     </p>
   </div>
   <ul>
-    <li>프로젝트 추가버튼을 클릭하면 위와 같이 모달창이 나타납니다.</li>
-    <li>Project Title을 입력하고 Add Project 버튼을 누르면 새로운 프로젝트가 추가됩니다.</li>
+    <li>When you click the Add Project button, a modal window like the one above will appear.</li>
+    <li>Enter the Project Title and click the Add Project button to add a new project.</li>
   </ul>
 </p>
+
+<br>
+<br>
 
 <p align="left">
-  <img src="https://github.com/user-attachments/assets/81e3c574-bbbd-4163-9756-50ef19686b95" width="100%" alt="image3" style=""/>
+  <img src="https://github.com/user-attachments/assets/4c6b734c-ff83-4b0c-b93c-3ad260a4ad49" width="100%" alt="image3" style=""/>
 
-  ### C. Task Suite 목록
-  **A. Task 프로젝트 목록**에서 선택한 프로젝트에 포함된 Task Suite 목록들을 나타냅니다.
+  ### C. Task Suite List
+  Displays the list of Task Suites included in the project selected from **A. Project List**
   <ul>
-    <li>목록 중 원하는 Task Suite를 클릭하면 해당 Task Suite에 포함된 Tasks목록을 확인할 수 있습니다.</li>
-    <li>위 사진은 Task Suite2를 선택한 예시입니다.</li>
+    <li>By clicking on the desired Task Suite from the list, you can view the Tasks included in that Task Suite.</li>
+    <li>The image above is an example where Task Suite 2 has been selected.</li>
   </ul>
 </p>
 
 <p>
 
-  ### D. Tasks 목록
-  선택한 Task Suite에 포함된 Task 목록을 나타냅니다.
+  ### D. Task List
+  Displays the list of Tasks included in the selected Task Suite.
   <ul>
-    <li>목록 중 원하는 Task의 드롭다운 버튼을 클릭하면 해당 Task의 세부 정보를 확인할 수 있습니다.</li>
+    <li>By clicking the dropdown button for the desired Task in the list, you can view the detailed information of that Task</li>
   </ul>
 </p>
 
 <p>
 
-  ### E. Task Suite 추가 버튼
-  선택한 Project에 새로운 Task Suite를 추가할 수 있는 버튼입니다.
+  ### E. Add Task Suite Button
+   The 'Add Task Suite' button lets you add a new Task Suite to the selected Project.
   <div style="margin-left: 20px;">
     <p>
       <img src="https://github.com/user-attachments/assets/d5dfeb5f-bdec-42ad-b9c8-680ed3fad894" width="50%" alt="image4" style=""/>
@@ -81,15 +125,15 @@ Sitlab Dashboard는 전북대학교 소프트웨어 인터랙션 연구실에서
   </div>
 
   <ul>
-    <li>Task 추가 버튼을 클릭하면 위와 같이 모달 창이 나타납니다.</li>
-    <li>Task Title을 입력하고 Add Task 버튼을 누르면 현재 Task Suite에 새로운 Task가 추가됩니다.</li>
+    <li>When you click the Add Task Button, a modal window like the one above will appear.</li>
+    <li>Enter the Task Title and click the Add Task button to add a new Task to the current Task Suite.</li>
   </ul>
 </p>
 
 <p align="left">
 
-  ### F. Tasks 추가버튼
-  선택한 Task Suite에 새로운 Task를 추가할 수 있는 버튼입니다. 
+  ### F. Add Task Button
+   The 'Add Task' button lets you add a new Task to the selected Task Suite. 
 
   <div style="margin-left: 20px;">
     <p>
@@ -98,99 +142,57 @@ Sitlab Dashboard는 전북대학교 소프트웨어 인터랙션 연구실에서
   </div>
 
   <ul>
-    <li>Task 추가버튼을 클릭하면 위와 같이 모달창이 나타납니다.</li>
-    <li>Task title을 입력하고 Add Task버튼을 누르면 새로운 Task가 추가됩니다.</li>
+    <li>When you click the Add Task Button, a modal window like the one above will appear.</li>
+    <li>Enter the Task title and click the Add Task button to add a new Task.</li>
   </ul>
 </p>
 
+<br>
+<br>
+
 <p align="left">
-  <img src="https://github.com/user-attachments/assets/f0fea35c-abf5-4157-a80a-694d61619803" width="100%" alt="image6" style=""/>
+  <img src="https://github.com/user-attachments/assets/b1acb7c2-9196-4c86-bba3-b33d8b7d4ee6" width="100%" alt="image6" style=""/>
 
-  ### G. Task 상세 정보
-특정 Task의 드롭다운 버튼을 클릭하면 해당 Task에 대한 상세 정보를 확인할 수 있습니다. Task 상세 정보에는 해당 Task에 참여한 사용자와 각 사용자가 수행한 Task에 대한 정보가 포함되어 있습니다. 각 행의 오른쪽에 위치한 Log 버튼을 클릭하면 수집된 상세한 인터랙션 데이터와 그에 대한 추상화된 데이터셋을 확인할 수 있습니다.
+  ### G. Information of Participants Who Engage in Task A and Results
+By clicking the dropdown button for a specific Task, information about the participants who engaged in that Task, along with the result data for that Task, will be displayed in each row.
 
-<p>
-  <img src="https://github.com/user-attachments/assets/528d210b-98a9-4d37-9ae7-a80fa2b3240e" width="100%" alt="image7" style=""/>
-</p>
+  ### H. Log Button
+By clicking the Log button located on the right side of each row, a Log Table modal can be opened.
 
-<ul>
-  <li>추상화가 적용된 인터랙션 데이터셋</li>
-</ul>
+<br>
+<br>
 
 <p>
-  <img src="https://github.com/user-attachments/assets/21835235-466d-42b2-9a74-26ff7f14b30f" width="100%" alt="image8" style=""/>
+  <img src="https://github.com/user-attachments/assets/60f123dc-e24f-4415-97a7-985e1eea57a6" width="100%" alt="image7" style=""/>
 </p>
 
+  ### I. Log Table
+In the Log Table modal, you can view the detailed interaction data that has been collected.
 <ul>
-  <li>추상화가 적용된 데이터셋을 구성하는 데이터를 확인하고 싶다면 해당 행을 클릭하세요.</li>
-  <li>예시: 2번 데이터셋을 클릭하면 2번 데이터셋을 구성하는 데이터들을 확인할 수 있습니다.</li>
+  <li>You can select the fields to be displayed in the log table.</li>
+  <li>You can turn on/off the abstraction feature.</li>
+  <li>You can download a CSV file of the interaction data.</li>
+</ul>
+
+
+
+<br>
+<br>
+
+<p>
+  <img src="https://github.com/user-attachments/assets/c2145f7d-dd49-45c2-bde8-0d6f34ff6421" width="100%" alt="image8" style=""/>
+</p>
+
+  ### J. Abstracted Interaction Data
+  For continuous interactions, such as mouse scrolls or keyboard inputs, abstraction is applied.
+<ul>
+  <li>If you want to view the data that is grouped into the abstracted dataset, click on the corresponding row.</li>
+  <li>Example: Click on dataset corresponding to ID 2 to view the data that is grouped into that dataset.</li>
 </ul>
 
 </p>
 
-## ⚙️설치방법
-
-1. **필수 조건:**
-   - 먼저, [Node.js](https://nodejs.org/)가 설치되어 있어야 합니다.
-
-   #### Node.js 설치방법
-
-    #### Windows
-    1. [Node.js 다운로드 페이지](https://nodejs.org/)로 이동합니다.
-    2. 'LTS' (Long Term Support) 버전을 선택하여 다운로드합니다.
-    3. 다운로드한 설치 파일을 실행하고, 화면의 지시에 따라 설치를 완료합니다.
-
-   #### macOS
-   - 방법 1: Node.js 다운로드 페이지 이용
-     1. [Node.js 다운로드 페이지](https://nodejs.org/)로 이동합니다.
-     2. 'LTS' (Long Term Support) 버전을 선택하여 다운로드합니다.
-     3. 다운로드한 설치 파일을 실행하고, 화면의 지시에 따라 설치를 완료합니다.
-
-   - 방법 2: Homebrew 이용
-     1. Homebrew가 설치되어 있는지 확인합니다. 설치되어 있지 않다면 [Homebrew 웹사이트](https://brew.sh/)의 지시에 따라 설치합니다.
-     2. 터미널을 열고, 다음 명령어를 입력하여 Node.js를 설치합니다:
-        ```sh
-        brew install node
-        ```
-
-    #### Linux
-    1. NodeSource 바이너리 배포판을 사용하여 설치할 수 있습니다:
-        ```sh
-        curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-        sudo apt-get install -y nodejs
-        ```
-
-2. **코드 클론:**
-   - GitHub에서 이 프로젝트의 코드를 클론합니다.
-      ```sh
-      git clone https://github.com/SIT-Lab/sitlab-dashboard.git
-      cd sitlab-dashboard
-      ```
-3. **환경 변수 설정:**
-    - 프로젝트의 루트 디렉토리에 .env 파일을 생성하고, 다음 내용을 추가합니다. Firebase 콘솔에서 발급받은 값을 넣어주세요
-      ```sh
-      REACT_APP_FIREBASE_API_KEY=발급받아서_넣어주세요
-      REACT_APP_FIREBASE_AUTH_DOMAIN=발급받아서_넣어주세요
-      REACT_APP_FIREBASE_PROJECT_ID=발급받아서_넣어주세요
-      REACT_APP_FIREBASE_STORAGE_BUCKET=발급받아서_넣어주세요
-      REACT_APP_FIREBASE_MESSAGING_SENDER_ID=발급받아서_넣어주세요
-      REACT_APP_FIREBASE_APP_ID=발급받아서_넣어주세요
-      REACT_APP_FIREBASE_MEASUREMENT_ID=발급받아서_넣어주세요
-      ```
-4. **필수 패키지 설치:**
-   - 프로젝트의 루트 디렉토리에서 npm을 사용하여 필요한 패키지를 설치합니다.
-      ```sh
-      npm install
-      ```
-5. **애플리케이션 실행:**
-   - 아래 명령어를 사용하여 애플리케이션을 실행합니다.
-      ```sh
-      npm start
-      ```
-6. **웹 브라우저에서 확인:**
-   - 웹 브라우저를 열고 http://localhost:3000으로 접속하여 애플리케이션을 확인합니다.
-
-## 📜License
+## License
 
 This project is licensed under the Apache License 2.0. For more details, please refer to the  [LICENSE](LICENSE) file.
 
