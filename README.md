@@ -8,10 +8,14 @@
 </p>
 
 
-The WebTrace Dashboard is a web-based tool for managing and analyzing user interaction data during remote usability tests. It enables testers to add, delete, and review Projects, Task Suites, and Tasks.
+The WebTrace Dashboard is a web-based tool for managing and analyzing user interaction data during remote usability testing. It enables testers to add, delete, and review Projects, Task Suites, and Tasks.
 
- Test participants can engage in tests through [WebTrace Tracker](https://github.com/SIT-Lab/WebTrace-Tracker), where the interaction data collected during tests is stored in Firebase. repetitive interaction data, such as scrolls or long text inputs, is abstracted into more readable datasets. The WebTrace Dashboard offers these abstracted datasets, enhancing the efficiency of interaction data analysis for administrators.
+ Test participants can engage in tests through [WebTrace Tracker](https://github.com/SIT-Lab/WebTrace-Tracker), where the interaction data collected during tests is stored in Firebase. repetitive interaction data, such as scrolls or long text inputs, are abstracted into more readable datasets. The WebTrace Dashboard offers these abstracted datasets, enhancing the efficiency of interaction data analysis for testers.
 
+## Example version of the WebTrace Dashboard
+
+An example version of the WebTrace Dashboard has been deployed using Vercel.
+You can access and explore the examples referenced in **Dashboard Features** through the following link: https://sitlab-dashboard.vercel.app/
 
 
 <!-- ## 👨🏼‍💻팀원
