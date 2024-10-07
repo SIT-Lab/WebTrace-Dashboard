@@ -15,7 +15,7 @@ The WebTrace Dashboard is a web-based tool for managing and analyzing user inter
 ## Example version of the WebTrace Dashboard
 
 An example version of the WebTrace Dashboard has been deployed using Vercel.
-You can access and explore the examples referenced in **Dashboard Features** through the following link: https://sitlab-dashboard.vercel.app/
+You can access and explore the examples referenced in **Dashboard Features** through the following link: https://webtrace-dashboard.vercel.app/
 
 
 <!-- ## 👨🏼‍💻팀원
