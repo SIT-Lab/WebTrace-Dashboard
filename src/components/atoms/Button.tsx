@@ -51,16 +51,7 @@ interface ButtonProps {
  * @param {string} [borderRadius] - 버튼의 테두리 반경 (선택적)
  * @param {function} onClick - 버튼 클릭 이벤트 핸들러
  */
-export const Button = ({
-  children,
-  text,
-  fontSize,
-  bgColor,
-  textColor,
-  borderRadius,
-  style,
-  onClick,
-}: ButtonProps) => {
+export const Button = ({ children, text, fontSize, bgColor, textColor, borderRadius, style, onClick }: ButtonProps) => {
   return (
     <Container
       type="button"

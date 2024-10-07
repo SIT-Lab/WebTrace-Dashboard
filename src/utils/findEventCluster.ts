@@ -74,8 +74,8 @@ export const findEventCluster = (logArray: any[]): EventClusterItem[] => {
     })
   })
 
-  return eventCluster.map(item => ({
+  return eventCluster.map((item) => ({
     ...item,
-    imageUrlForCluster: clusterImageUrlMap.get(item.clusterIndex) || ''
+    imageUrlForCluster: clusterImageUrlMap.get(item.clusterIndex) || '',
   }))
 }

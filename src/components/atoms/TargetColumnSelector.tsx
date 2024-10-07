@@ -65,7 +65,9 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
   return (
     <div>
       <StyledFieldset>
-        <legend><b>Select Fields to Display</b></legend>
+        <legend>
+          <b>Select Fields to Display</b>
+        </legend>
 
         {/* <CheckboxWrapper>
           <input
@@ -133,10 +135,6 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
           <label>xpath</label>
         </CheckboxWrapper>
 
-
-
-
-
         <CheckboxWrapper>
           <input
             type="checkbox"
@@ -158,7 +156,6 @@ const TargetColumnSelector: React.FC<TargetColumnSelectorProp> = ({
           />
           <label>scroll direction</label>
         </CheckboxWrapper> */}
-
 
         <CheckboxWrapper>
           <input
