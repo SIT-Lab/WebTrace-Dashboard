@@ -11,9 +11,9 @@ import upIcon from '../../assets/up.svg'
  * 스타일이 적용된 이미지 컴포넌트
  */
 const StyledImage = styled.img`
-  width: 100%;      /* 너비를 셀 크기에 맞게 설정 */
+  width: 100%; /* 너비를 셀 크기에 맞게 설정 */
   max-width: 400px; /* 이미지의 최대 너비를 설정 */
-  height: auto;     /* 높이는 자동으로 조정 */
+  height: auto; /* 높이는 자동으로 조정 */
   border-radius: 5px;
 `
 /**
@@ -26,8 +26,8 @@ const TableBar = styled.div<{ isTop?: boolean }>`
   background-color: #f8f8f8f9;
   border: 1px solid ${COLORS.gray03};
   border-radius: ${({ isTop }) => (isTop ? '10px 10px 0 0' : '0px 0px 10px 10px')};
-  height: 22px; 
-`;
+  height: 22px;
+`
 
 /**
  * 상세 정보 테이블 스타일링
@@ -43,15 +43,14 @@ const DetailsTable = styled.table`
 const DetailsContainer = styled.div`
   position: static;
   width: calc(70% - 10px);
-  margin: 0 auto;  /* 중앙 정렬 */
+  margin: 0 auto; /* 중앙 정렬 */
   background-color: 'COLORS.skyblue'; /* 연한 하늘색 */
   max-height: 700px;
   overflow-x: auto;
   overflow-y: auto;
   z-index: 10;
   padding: 4px;
-`;
-
+`
 
 /**
  * 테이블 헤더 스타일링
@@ -81,12 +80,12 @@ const TableRow = styled.td`
 const TableHeaderRow = styled.tr<{ hasId: boolean; columns: number; hasScreenshot: boolean }>`
   display: grid;
   grid-template-columns: ${({ hasId, columns, hasScreenshot }) => {
-    let template = hasId ? `0.2fr ` : ``; // ID 컬럼 고정
-    template += `repeat(${columns - 1 - (hasScreenshot ? 1 : 0)}, 1fr)`; // 일반 컬럼들
+    let template = hasId ? '0.2fr ' : '' // ID 컬럼 고정
+    template += `repeat(${columns - 1 - (hasScreenshot ? 1 : 0)}, 1fr)` // 일반 컬럼들
     if (hasScreenshot) {
-      template += ` 2fr`; // 스크린샷 컬럼의 너비를 더 크게 설정
+      template += ' 2fr' // 스크린샷 컬럼의 너비를 더 크게 설정
     }
-    return template;
+    return template
   }};
 `
 
@@ -101,8 +100,7 @@ const TriangleIcon = styled.div<{ isSelected: boolean }>`
   border-top: ${({ isSelected }) => (isSelected ? 'none' : '8px solid purple')};
   border-bottom: ${({ isSelected }) => (isSelected ? '8px solid purple' : 'none')};
   border-radius: 3px; /* 모서리를 둥글게 만듭니다 */
-`;
-
+`
 
 /**
  * DropdownDetails 컴포넌트의 props를 정의하는 인터페이스
@@ -124,9 +122,9 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
 
   const filteredLogs = eventClusterItems.filter((log) => log.clusterIndex === clusterIndex)
 
-  let columnsCount = 0;
+  let columnsCount = 0
 
-  const firstLogEventType = filteredLogs.length > 0 ? filteredLogs[0].eventType : '';
+  const firstLogEventType = filteredLogs.length > 0 ? filteredLogs[0].eventType : ''
 
   if (firstLogEventType === 'scroll') {
     columnsCount = [
@@ -135,8 +133,8 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
       isShowMenuInLogTable.scrollState,
       // isShowMenuInLogTable.scrollDirection,
       // isShowMenuInLogTable.imageUrl,
-      isShowMenuInLogTable.time
-    ].filter(Boolean).length; // 총 3개
+      isShowMenuInLogTable.time,
+    ].filter(Boolean).length // 총 3개
   } else if (firstLogEventType === 'data input') {
     columnsCount = [
       isShowMenuInLogTable.id,
@@ -144,26 +142,26 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
       isShowMenuInLogTable.keyboardInputState,
       isShowMenuInLogTable.keyboardInputPressedKey,
       isShowMenuInLogTable.keyboardInputKeyCode,
-      isShowMenuInLogTable.time
+      isShowMenuInLogTable.time,
       // isShowMenuInLogTable.imageUrl,
-    ].filter(Boolean).length; // 총 4개
+    ].filter(Boolean).length // 총 4개
   } else if (['left click', 'right click', 'wheel click'].includes(firstLogEventType)) {
     columnsCount = [
       isShowMenuInLogTable.id,
       // isShowMenuInLogTable.eventType,
       isShowMenuInLogTable.whxy,
       // isShowMenuInLogTable.imageUrl,
-      isShowMenuInLogTable.time
-    ].filter(Boolean).length; // 총 3개
+      isShowMenuInLogTable.time,
+    ].filter(Boolean).length // 총 3개
   }
 
-  console.log("카운트: ", columnsCount);
+  console.log('카운트: ', columnsCount)
 
   let content
 
   if (filteredLogs.length > 0) {
     const firstLogEventType = filteredLogs[0].eventType
-    const hasScreenshot = Boolean(isShowMenuInLogTable.imageUrl);
+    const hasScreenshot = Boolean(isShowMenuInLogTable.imageUrl)
 
     content = (
       <>
@@ -220,9 +218,7 @@ const LogDetails: React.FC<DropdownDetailsProps> = ({ eventClusterItems, cluster
               )}
             </TableHeaderRow>
           ))}
-          <TableBar>
-            {/* 업아이콘 대신 공백 */}
-          </TableBar>
+          <TableBar>{/* 업아이콘 대신 공백 */}</TableBar>
         </DetailsTable>
       </>
     )

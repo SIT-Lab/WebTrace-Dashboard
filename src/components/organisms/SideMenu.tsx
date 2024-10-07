@@ -14,7 +14,7 @@ import { OneInputModal } from '../organisms/OneInputModal'
  * SideMenuProps 인터페이스: SideMenu 컴포넌트의 props를 정의
  */
 export interface SideMenuProps {
-  ownerID: string;  // 프로젝트 소유자의 ID를 받아옴
+  ownerID: string // 프로젝트 소유자의 ID를 받아옴
 }
 
 /**
@@ -84,8 +84,8 @@ const BannerText = styled.div`
   // 각 span 사이에 간격을 추가
   span {
     margin-bottom: 4px; // 간격을 추가 (4px은 원하는 크기로 조정 가능)
-    font-weight: bold;  // 글씨를 볼드하게
-    font-size: 20px; 
+    font-weight: bold; // 글씨를 볼드하게
+    font-size: 20px;
     &:last-child {
       margin-bottom: 0; // 마지막 요소는 간격을 제거
     }
@@ -112,7 +112,7 @@ const ButtonContainer = styled.div`
 function SideMenu({ ownerID }: SideMenuProps) {
   const [projects, setProjects] = useState<ProjectData[]>([])
   const [loading, setLoading] = useState(true)
-  const [isShowModal, setIsShowModal] = useState(false)  // 모달 표시 상태
+  const [isShowModal, setIsShowModal] = useState(false) // 모달 표시 상태
   const navigate = useNavigate()
   const { selectedProjectId, setSelectedProjectId, setSelectedProjectName } = useProject()
 
@@ -159,8 +159,8 @@ function SideMenu({ ownerID }: SideMenuProps) {
     <Container>
       <Banner
         onClick={() => {
-          setSelectedProjectId("")  // 선택된 프로젝트 ID를 null로 설정
-          navigate('/')  // 홈 화면으로 이동
+          setSelectedProjectId('') // 선택된 프로젝트 ID를 null로 설정
+          navigate('/') // 홈 화면으로 이동
         }}
       >
         <LogoIcon>
@@ -178,10 +178,10 @@ function SideMenu({ ownerID }: SideMenuProps) {
           key={project.id}
           isSelected={selectedProjectId === project.id}
           onClick={() => {
-            setSelectedProjectId(project.id);
-            setSelectedProjectName(project.title); // 프로젝트 이름을 상태에 설정
-            navigate(`/${project.id}`);
-            window.location.reload();
+            setSelectedProjectId(project.id)
+            setSelectedProjectName(project.title) // 프로젝트 이름을 상태에 설정
+            navigate(`/${project.id}`)
+            window.location.reload()
           }}
         >
           <div>{project.title}</div>
@@ -189,11 +189,7 @@ function SideMenu({ ownerID }: SideMenuProps) {
       ))}
 
       <ButtonContainer>
-        <AddButton
-          color="gray"
-          text="Add Project"
-          onClick={() => setIsShowModal(true)}
-        />
+        <AddButton color="gray" text="Add Project" onClick={() => setIsShowModal(true)} />
       </ButtonContainer>
 
       {isShowModal && (

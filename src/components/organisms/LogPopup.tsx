@@ -69,8 +69,7 @@ const RemoveAbstractionButton = styled(ButtonBase)`
   padding-left: 20px;
 `
 
-const IconInButton = styled.img`
-`
+const IconInButton = styled.img``
 
 /**
  * 스타일이 적용된 콘텐츠 영역
@@ -151,7 +150,11 @@ function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
               <CheckboxLabel>Remove Abstraction</CheckboxLabel>
             </RemoveAbstractionButton>
 
-            <DownloadButton onClick={() => { downloadLogDataCSV(logs.data, 'logdata.csv') }}>
+            <DownloadButton
+              onClick={() => {
+                downloadLogDataCSV(logs.data, 'logdata.csv')
+              }}
+            >
               <IconInButton src={csvIcon} style={{ width: '30px', height: '30px', marginRight: '20px' }} />
               Download CSV
             </DownloadButton>
@@ -165,7 +168,6 @@ function LogPopup({ logs, isShowModal, setIsShowModal }: LogPopupProps) {
             <UnAbstractTable data={logs.data} isShowMenuInLogTable={isShowMenuInLogTable} />
           )}
         </Content>
-
       </Container>
     </Modal>
   )

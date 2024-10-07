@@ -8,7 +8,9 @@ import { ProjectProvider } from './context/ProjectContext'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <ProjectProvider>  {/* ProjectProvider로 App을 감싸기 */}
+    <ProjectProvider>
+      {' '}
+      {/* ProjectProvider로 App을 감싸기 */}
       <App />
     </ProjectProvider>
   </React.StrictMode>

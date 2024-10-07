@@ -7,7 +7,13 @@ import AddImg from '../../assets/add.svg'
  */
 type ButtonClickEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>
 
-const Container = styled.button<{ $color: string; $fontSize: string; $height: string; $width: string; $borderRadius: string }>`
+const Container = styled.button<{
+  $color: string
+  $fontSize: string
+  $height: string
+  $width: string
+  $borderRadius: string
+}>`
   color: ${({ $color }) => $color};
   font-size: ${({ $fontSize }) => $fontSize};
   border: none;
@@ -58,7 +64,15 @@ interface AddButtonProps {
  * @param {string} [borderRadius='8px'] - 버튼의 보더 레디어스 (굴곡)
  * @param {function} onClick - 버튼 클릭 이벤트 핸들러
  */
-export const AddButton = ({ text, color = 'gray', fontSize = '16px', height = 'auto', width = 'fit-content', borderRadius = '8px', onClick }: AddButtonProps) => {
+export const AddButton = ({
+  text,
+  color = 'gray',
+  fontSize = '16px',
+  height = 'auto',
+  width = 'fit-content',
+  borderRadius = '8px',
+  onClick,
+}: AddButtonProps) => {
   return (
     <Container
       type="button"

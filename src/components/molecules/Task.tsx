@@ -145,7 +145,6 @@ function Task(props: TaskData) {
                 <GrayText>{formatTimestamp(props.launchedAt)}</GrayText>
               </PadLeft16>
             </InfoLine>
-
           </InfoLines>
           <IconButton
             iconPath={deleteIcon}

@@ -34,7 +34,7 @@ const Title = styled.div`
 const ProjectInfo = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10px;  // 각 정보 사이에 간격 추가
+  gap: 10px; // 각 정보 사이에 간격 추가
   padding: 16px;
   background-color: ${COLORS.white};
   border-radius: 16px;

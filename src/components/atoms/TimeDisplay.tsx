@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
 /**
  * TimeDisplay 컴포넌트의 props를 정의하는 인터페이스
  */
 interface TimeDisplayProps {
-  time: any;
+  time: any
 }
 
 /**
@@ -13,12 +13,12 @@ interface TimeDisplayProps {
  * @returns 포맷된 시간 JSX 요소.
  */
 const TimeDisplay: React.FC<TimeDisplayProps> = ({ time }) => {
-  const now = new Date(time);
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
+  const now = new Date(time)
+  const hours = now.getHours()
+  const minutes = now.getMinutes()
+  const seconds = now.getSeconds()
 
-  const grayStyle = { color: 'gray' };
+  const grayStyle = { color: 'gray' }
 
   return (
     <>
@@ -29,7 +29,7 @@ const TimeDisplay: React.FC<TimeDisplayProps> = ({ time }) => {
       {seconds.toString().padStart(2, '0')}
       <span style={grayStyle}>s</span>
     </>
-  );
-};
+  )
+}
 
-export default TimeDisplay;
+export default TimeDisplay

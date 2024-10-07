@@ -23,11 +23,11 @@ export interface LogData {
 
   /**
    * 키보드의 상태에 대한 정보.
-  * - 'input start': 키보드 이벤트가 시작됨을 나타냄.
+   * - 'input start': 키보드 이벤트가 시작됨을 나타냄.
    * - 'input ongoing': 키보드 이벤트가 진행 중임을 나타냄.
    * - 'input end': 키보드 이벤트가 종료됨을 나타냄.
    */
-  keyboardInputState?: string;
+  keyboardInputState?: string
 
   /**
    * 키보드 이벤트의 유형을 나타냄.
@@ -35,14 +35,14 @@ export interface LogData {
    * - 'keyup': 키를 뗐을 때 발생하는 이벤트.
    * - 'keypress': 키를 누르는 동안 발생하는 이벤트.
    */
-  keyboardInputType?: string;
+  keyboardInputType?: string
 
   /**
    * 사용자가 누른 키에 대한 정보.
    * - 'a': 사용자가 'a' 키를 눌렀을 때.
    * - 'Enter': 사용자가 'Enter' 키를 눌렀을 때.
    */
-  keyboardInputPressedKey?: string;
+  keyboardInputPressedKey?: string
 
   /**
    * 키의 코드에 대한 상세한 정보.
@@ -52,7 +52,7 @@ export interface LogData {
    * - '65': 'A' 키의 키코드.
    * - '13': 'Enter' 키의 키코드.
    */
-  keyboardInputKeyCode?: string;
+  keyboardInputKeyCode?: string
 
   // 스크린샷한 화면 이미지의 Firebase URL.
   imageUrl?: string

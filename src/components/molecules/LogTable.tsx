@@ -7,7 +7,7 @@ import { ShowMenuInLogTable } from '../../interfaces/menuInterface'
 import { EventClusterItem } from '../../utils/findEventCluster'
 import { findEventCluster } from '../../utils/findEventCluster'
 import LogDetails from './LogDetails'
-import greenCheckIcon from '../../assets/greencheck.svg';
+import greenCheckIcon from '../../assets/greencheck.svg'
 import { Button } from '../atoms/Button'
 
 /**
@@ -37,14 +37,14 @@ const LogHead = styled.div<LogHeadProps & { hasId: boolean }>`
   display: grid;
   grid-template-columns: ${({ hasId, columns }) => {
     if (hasId) {
-      return `0.2fr repeat(${columns - 1}, 0.8fr) 0.2fr`; // ID 컬럼이 있을 때, ID는 0.2fr, 나머지는 1fr, abstract는 0.4fr
+      return `0.2fr repeat(${columns - 1}, 0.8fr) 0.2fr` // ID 컬럼이 있을 때, ID는 0.2fr, 나머지는 1fr, abstract는 0.4fr
     } else {
-      return `repeat(${columns}, 0.8fr) 0.2fr`; // ID 컬럼이 없을 때, 나머지는 1fr, abstract는 0.4fr
+      return `repeat(${columns}, 0.8fr) 0.2fr` // ID 컬럼이 없을 때, 나머지는 1fr, abstract는 0.4fr
     }
   }};
   border-top: 1px solid ${COLORS.gray01};
   padding: 16px;
-`;
+`
 
 /**
  * 스타일이 적용된 로그 헤더 행
@@ -61,7 +61,7 @@ const LogHeadRow = styled.div`
 interface LogColumnProps {
   isSelected?: boolean
   columns: number
-  eventType: string; // eventType을 추가
+  eventType: string // eventType을 추가
 }
 
 /**
@@ -74,9 +74,9 @@ const LogColumn = styled.tr<LogColumnProps & { hasId: boolean }>`
   display: grid;
   grid-template-columns: ${({ hasId, columns }) => {
     if (hasId) {
-      return `0.2fr repeat(${columns - 1}, 0.8fr) 0.2fr`; // ID 컬럼이 있을 때, ID는 0.2fr, 나머지는 1fr, abstract는 0.2fr
+      return `0.2fr repeat(${columns - 1}, 0.8fr) 0.2fr` // ID 컬럼이 있을 때, ID는 0.2fr, 나머지는 1fr, abstract는 0.2fr
     } else {
-      return `repeat(${columns}, 0.8fr) 0.2fr`; // ID 컬럼이 없을 때, 나머지는 1fr, abstract는 0.2fr
+      return `repeat(${columns}, 0.8fr) 0.2fr` // ID 컬럼이 없을 때, 나머지는 1fr, abstract는 0.2fr
     }
   }};
   border-top: 1px solid ${COLORS.gray01};
@@ -84,10 +84,11 @@ const LogColumn = styled.tr<LogColumnProps & { hasId: boolean }>`
 
   &:hover {
     background-color: ${({ eventType: eventType }) =>
-    ['left click', 'wheel click', 'right click', 'control input'].includes(eventType) ? 'transparent' : '#e6e6fa'}; // 연보라색
+    ['left click', 'wheel click', 'right click', 'control input'].includes(eventType)
+      ? 'transparent'
+      : '#e6e6fa'}; // 연보라색
   }
-`;
-
+`
 
 /**
  * 삼각형 아이콘을 스타일링하는 컴포넌트
@@ -100,8 +101,7 @@ const TriangleIcon = styled.div<{ isSelected: boolean }>`
   border-top: ${({ isSelected }) => (isSelected ? 'none' : '8px solid purple')};
   border-bottom: ${({ isSelected }) => (isSelected ? '8px solid purple' : 'none')};
   border-radius: 3px; /* 모서리를 둥글게 만듭니다 */
-`;
-
+`
 
 /**
  * 스타일이 적용된 로그 행
@@ -112,7 +112,7 @@ const LogRow = styled.td`
   justify-content: center;
   align-items: center;
   text-align: center;
-`;
+`
 
 /**
  * LogTable 컴포넌트의 props를 정의하는 인터페이스
@@ -166,8 +166,12 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
    */
   const handleOptionClick = (index: number, event: any) => {
     // 'left click', 'wheel click', 'right click'은 추상화를 적용하지 않으므로 드롭다운을 펼치지 않음
-    if (['left click', 'wheel click', 'right click', 'control input'].includes(eventClusterItems[firstItemsInClusters[index]].eventType)) {
-      return; // 클릭 이벤트 무시
+    if (
+      ['left click', 'wheel click', 'right click', 'control input'].includes(
+        eventClusterItems[firstItemsInClusters[index]].eventType
+      )
+    ) {
+      return // 클릭 이벤트 무시
     }
 
     if (selectedRowIndex === index) {
@@ -203,14 +207,18 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
    * @param {string} imageUrl - 이미지 URL
    */
   const handleScreenshotClick = (imageUrl: string) => {
-    window.open(imageUrl, '_blank'); // 새 창에서 이미지 URL 열기
+    window.open(imageUrl, '_blank') // 새 창에서 이미지 URL 열기
   }
 
   return (
     <LogContainer>
       <InfoLines>
         <LogHead columns={columnsCount} hasId={isShowMenuInLogTable.id}>
-          {isShowMenuInLogTable.id ? (<LogHeadRow><span>id</span></LogHeadRow>) : null}
+          {isShowMenuInLogTable.id ? (
+            <LogHeadRow>
+              <span>id</span>
+            </LogHeadRow>
+          ) : null}
           {isShowMenuInLogTable.eventType ? <LogHeadRow>event type</LogHeadRow> : null}
           {isShowMenuInLogTable.time ? <LogHeadRow>event time</LogHeadRow> : null}
           {isShowMenuInLogTable.url ? <LogHeadRow>url</LogHeadRow> : null}
@@ -236,18 +244,23 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                   eventType={eventClusterItems[item].eventType} // 이 부분을 추가
                   onClick={(event) => handleOptionClick(index, event)}
                 >
-
                   {isShowMenuInLogTable.id ? <LogRow>{eventClusterItems[item].clusterIndex}</LogRow> : null}
                   {isShowMenuInLogTable.eventType && (
                     <LogRow>
                       <div>
-                        {eventClusterItems[item].eventType === 'scroll' ? `${eventClusterItems[item].scrollDirection}` : eventClusterItems[item].eventType}
-                        {['left click', 'wheel click', 'right click', 'control input'].includes(eventClusterItems[item].eventType) ? '' : (
-                          <>
-                            <br />
-                            <div style={{ color: 'purple' }}>(Abstracted)</div>
-                          </>
-                        )}
+                        {eventClusterItems[item].eventType === 'scroll'
+                          ? `${eventClusterItems[item].scrollDirection}`
+                          : eventClusterItems[item].eventType}
+                        {['left click', 'wheel click', 'right click', 'control input'].includes(
+                          eventClusterItems[item].eventType
+                        ) ? (
+                            ''
+                          ) : (
+                            <>
+                              <br />
+                              <div style={{ color: 'purple' }}>(Abstracted)</div>
+                            </>
+                          )}
                       </div>
                     </LogRow>
                   )}
@@ -282,8 +295,8 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                           {console.log(eventClusterItems[item].imageUrlForCluster)}
                           <Button
                             onClick={() => handleScreenshotClick(eventClusterItems[item].imageUrlForCluster!)}
-                            bgColor="#800080"  // 보라색 배경
-                            textColor="#FFFFFF"  // 하얀 글씨
+                            bgColor="#800080" // 보라색 배경
+                            textColor="#FFFFFF" // 하얀 글씨
                           >
                             view
                           </Button>
@@ -299,7 +312,7 @@ const LogTable: React.FC<LogTableProps> = ({ data, isShowMenuInLogTable }) => {
                     {['scroll', 'data input'].includes(eventClusterItems[item].eventType) ? (
                       <TriangleIcon isSelected={isSelected} /> // 아이콘을 이미지로 렌더링
                     ) : (
-                      " " // 조건에 맞지 않을 경우 공백 출력
+                      ' ' // 조건에 맞지 않을 경우 공백 출력
                     )}
                   </LogRow>
                 </LogColumn>

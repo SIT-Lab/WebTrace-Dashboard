@@ -66,9 +66,7 @@ function DashboardLayout(props: { children: React.ReactNode }) {
             <Navbar />
           </NavbarContainer>
         )}
-        <div style={{ backgroundColor: COLORS.background }}>
-          {props.children}
-        </div>
+        <div style={{ backgroundColor: COLORS.background }}>{props.children}</div>
       </RightContent>
     </Container>
   )
