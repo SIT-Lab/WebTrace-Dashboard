@@ -72,7 +72,7 @@ The WebTrace Dashboard was developed by the following team members from the Soft
 
 ## Dashboard Features
 <p align="left" >
-  <img src="https://github.com/user-attachments/assets/d507675b-010c-45dd-be88-d99ec3197666" width="100%" alt="image1" style=""/>
+  <img src="https://github.com/user-attachments/assets/c76ae77b-6aaa-4763-b9fd-68939b77aa18" width="100%" alt="image1" style=""/>
 
   ### A. Project List
  Displays the complete list of projects.
@@ -99,7 +99,7 @@ The WebTrace Dashboard was developed by the following team members from the Soft
 <br>
 
 <p align="left">
-  <img src="https://github.com/user-attachments/assets/4c6b734c-ff83-4b0c-b93c-3ad260a4ad49" width="100%" alt="image3" style=""/>
+  <img src="https://github.com/user-attachments/assets/fc7e026b-cc69-4bca-b6b8-6e0e2890b4aa" width="100%" alt="image3" style=""/>
 
   ### C. Task Suite List
   Displays the list of Task Suites included in the project selected from **A. Project List**
@@ -155,22 +155,25 @@ The WebTrace Dashboard was developed by the following team members from the Soft
 <br>
 
 <p align="left">
-  <img src="https://github.com/user-attachments/assets/b1acb7c2-9196-4c86-bba3-b33d8b7d4ee6" width="100%" alt="image6" style=""/>
+  <img src="https://github.com/user-attachments/assets/f0d7ea4c-95e2-4265-ac24-1b7808a07ea3" width="100%" alt="image6" style=""/>
 
   ### G. Information of Participants Who Engage in Task A and Results
 By clicking the dropdown button for a specific Task, information about the participants who engaged in that Task, along with the result data for that Task, will be displayed in each row.
 
-  ### H. Log Button
+  ### H. Session Code
+By entering the Session Code into the [WebTrace Tracker](https://github.com/SIT-Lab/WebTrace-Tracker) Test participants can engage in the corresponding Task.
+
+  ### I. Log Button
 By clicking the Log button located on the right side of each row, a Log Table modal can be opened.
 
 <br>
 <br>
 
 <p>
-  <img src="https://github.com/user-attachments/assets/60f123dc-e24f-4415-97a7-985e1eea57a6" width="100%" alt="image7" style=""/>
+  <img src="https://github.com/user-attachments/assets/0cec969b-26c2-478f-8c57-c6e8bd78441e" width="100%" alt="image7" style=""/>
 </p>
 
-  ### I. Log Table
+  ### J. Log Table
 In the Log Table modal, you can view the detailed interaction data that has been collected.
 <ul>
   <li>You can select the fields to be displayed in the log table.</li>
@@ -184,10 +187,10 @@ In the Log Table modal, you can view the detailed interaction data that has been
 <br>
 
 <p>
-  <img src="https://github.com/user-attachments/assets/c2145f7d-dd49-45c2-bde8-0d6f34ff6421" width="100%" alt="image8" style=""/>
+  <img src="https://github.com/user-attachments/assets/97b7885a-656e-4a9d-ade1-808aa0626d1d" width="100%" alt="image8" style=""/>
 </p>
 
-  ### J. Abstracted Interaction Data
+  ### K. Abstracted Interaction Data
   For continuous interactions, such as mouse scrolls or keyboard inputs, abstraction is applied.
 <ul>
   <li>If you want to view the data that is grouped into the abstracted dataset, click on the corresponding row.</li>
