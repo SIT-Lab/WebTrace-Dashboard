@@ -11,6 +11,8 @@ import { TaskData } from '../../interfaces/apiTypes'
 import Task from './Task'
 import { AddButton } from '../atoms/AddButton'
 import { OneInputModal } from '../organisms/OneInputModal'
+import { addSessionCode } from '../../service/apiClient'
+import { generateHash } from '../../utils/generateHash'
 
 /**
  * 스타일이 적용된 루트 컨테이너
@@ -133,6 +135,39 @@ const GrayText = styled.span`
 `
 
 /**
+ * 스타일이 적용된 세션코드 컨테이너
+ */
+const SessionCodeContainer = styled.div``
+
+const SessionCodeContainerHeader = styled.div`
+  margin-top: 8px; /* 위쪽 간격 조정 */
+  padding: 6px 10px; /* 상하, 좌우 여백 줄이기 */
+  background-color: ${COLORS.light_purple}; /* 배경색 */
+  color: ${COLORS.white}; /* 텍스트 색상 */
+  border-top-left-radius: 6px; /* 왼쪽 상단 둥근 모서리 */
+  border-bottom-left-radius: 0; /* 왼쪽 하단은 직각 */
+  border-bottom-right-radius: 0; /* 오른쪽 하단은 직각 */
+  font-size: 12px; /* 글씨 크기 조정 */
+  font-weight: 500; /* 약간 얇게 설정 */
+  display: inline-block; /* 텍스트를 한 줄로 유지 */
+  line-height: 1.2; /* 텍스트 높이 조정 */
+`
+
+const SessionCode = styled.span`
+  margin-top: 8px; /* 위쪽 간격 조정 */
+  padding: 6px 10px; /* 상하, 좌우 여백 줄이기 */
+  background-color: ${COLORS.gray01}; /* 회색 배경 */
+  color: ${COLORS.gray02}; /* 텍스트 색상 */
+  border-top-right-radius: 6px; /* 오른쪽 상단 둥근 모서리 */
+  border-bottom-left-radius: 0; /* 왼쪽 하단은 직각 */
+  border-bottom-right-radius: 0; /* 오른쪽 하단은 직각 */
+  font-size: 12px; /* 글씨 크기 조정 */
+  font-weight: 500; /* 약간 얇게 설정 */
+  display: inline-block; /* 텍스트를 한 줄로 유지 */
+  line-height: 1.2; /* 텍스트 높이 조정 */
+`
+
+/**
  * Project 컴포넌트
  */
 export default function Project() {
@@ -143,6 +178,7 @@ export default function Project() {
   const [loading, setLoading] = useState(true)
   const [isAddTaskSuiteModal, setIsAddTaskSuiteModal] = useState(false)
   const [isAddTaskModal, setIsAddTaskModal] = useState(false)
+  const [sessionCodes, setSessionCodes] = useState<{ [key: string]: string }>({})
 
   const navigate = useNavigate()
 
@@ -182,6 +218,22 @@ export default function Project() {
     }
     fetchTasks()
   }, [projectid, tasksuiteid])
+
+  /**
+   * 세션코드 표시를 위한 useEffect 훅 task.id를 키로 설정, 키에 해당하는 해시를 연결
+   */
+  useEffect(() => {
+    const generateSessionCode = async () => {
+      const numbers: { [key: string]: string } = {}
+      for (const task of tasks) {
+        const hash = await generateHash(projectid || '', tasksuiteid || '', task.id)
+        numbers[task.id] = hash
+      }
+      setSessionCodes(numbers)
+    }
+
+    generateSessionCode()
+  }, [tasks, projectid, tasksuiteid])
 
   return loading ? (
     <></>
@@ -248,10 +300,10 @@ export default function Project() {
                 buttonText="Add Task Suite"
               />
             </TopMenuContainer>
-            <IDBox>
+            {/* <IDBox>
               <b>{'ID: '}</b>
               <GrayText>{tasksuiteid}</GrayText>
-            </IDBox>
+            </IDBox> */}
           </Container>
           <Gap16 />
           <MainContainer>
@@ -275,6 +327,10 @@ export default function Project() {
               {tasks.length > 0 ? (
                 tasks.map((t, i) => (
                   <>
+                    <SessionCodeContainer>
+                      <SessionCodeContainerHeader>Session Code</SessionCodeContainerHeader>
+                      <SessionCode>{sessionCodes[t.id] || 'Loading...'}</SessionCode>
+                    </SessionCodeContainer>
                     <Task
                       key={i}
                       id={t.id}
@@ -295,9 +351,24 @@ export default function Project() {
                 sendInputValue={async (value) => {
                   const docRef = await addTask(projectid || '', tasksuiteid || '', value)
                   if (docRef) {
+                    // Task 생성 성공
                     alert('You have successfully added the task.')
+
+                    // Task ID 추출
+                    const taskId = docRef.id
+
+                    // 세션코드 생성 및 저장
+                    const sessionCodeSaved = await addSessionCode(projectid || '', tasksuiteid || '', taskId)
+
+                    if (sessionCodeSaved) {
+                      alert('Session Code successfully saved.')
+                    } else {
+                      alert('Failed to save Session Code.')
+                    }
+
                     location.reload()
                   } else {
+                    // Task 생성 실패
                     alert('Failed to add the task.')
                   }
                 }}

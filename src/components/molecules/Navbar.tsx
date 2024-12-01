@@ -106,7 +106,7 @@ function Navbar() {
       {selectedProjectId && (
         <ProjectInfo>
           <Label>Name:</Label> <Value>{selectedProject.name}</Value>
-          <Label>ID:</Label> <Value>{selectedProject.id}</Value>
+          {/* <Label>ID:</Label> <Value>{selectedProject.id}</Value> */}
         </ProjectInfo>
       )}
     </Container>
