@@ -3,6 +3,7 @@ import {
   query,
   collection,
   getDocs,
+  setDoc,
   addDoc,
   deleteDoc,
   doc,
@@ -11,6 +12,7 @@ import {
   Timestamp,
 } from 'firebase/firestore'
 import { db } from './firebaseConfig'
+import { generateHash } from '../utils/generateHash'
 
 /**
  * 입력으로 주어진 ID값 document의 경로를를 반환합니다.
@@ -201,12 +203,68 @@ export const deleteTaskSuite = async (projectId: string, taskSuiteID: string) =>
 }
 
 /**
- * 입력받은 ID의 태스크를 제거합니다.
+ * 입력받은 ID의 태스크와 해당 태스크에 연결된 세션코드를 제거합니다.
  * @param projectId string - 태스크가 위치한 프로젝트의 ID
  * @param taskSuiteID string - 태스크가 위치한 task suite ID
  * @param taskId string - 태스크의 ID
- * @returns boolean - 성공 여부
+ * @returns Promise<boolean> - 성공 여부
  */
-export const deleteTask = async (projectId: string, taskSuiteID: string, taskId: string) => {
-  return await deleteByRef(`project/${projectId}/taskSuite/${taskSuiteID}/task/${taskId}`)
-}
+export const deleteTask = async (projectId: string, taskSuiteID: string, taskId: string): Promise<boolean> => {
+  try {
+    // 1. Task 삭제
+    const taskDocRef = `project/${projectId}/taskSuite/${taskSuiteID}/task/${taskId}`;
+    await deleteByRef(taskDocRef);
+    console.log(`Task deleted: ${taskId}`);
+
+    // 2. 세션코드 생성 (기존 로직과 동일한 방식으로 생성)
+    const sessionCode = await generateHash(projectId, taskSuiteID, taskId);
+
+    // 3. 세션코드 삭제
+    const sessionCodeDocRef = `sessionCode/${sessionCode}`;
+    await deleteByRef(sessionCodeDocRef);
+    console.log(`Session Code deleted: ${sessionCode}`);
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting task or Session Code:', error);
+    return false;
+  }
+};
+
+/*------------------------------*/
+/**
+ * 프로젝트, Task Suite, Task ID를 사용하여 세션코드를 생성하고 Firestore에 저장
+ * @param projectId string - 프로젝트 ID
+ * @param taskSuiteId string - Task Suite ID
+ * @param taskId string - Task ID
+ * @returns Promise<boolean> - 저장 성공 여부
+ */
+export const addSessionCode = async (
+  projectId: string,
+  taskSuiteId: string,
+  taskId: string
+): Promise<boolean> => {
+  try {
+    // 세션코드 생성 (간단히 ID들을 결합해 해싱)
+    const sessionCode = await generateHash(projectId, taskSuiteId, taskId);
+
+    // Firestore 경로 정의
+    const sessionCodeDocRef = doc(db, `sessionCode/${sessionCode}`);
+
+    // Firestore에 저장할 데이터
+    const sessionCodeData = {
+      projectId,
+      taskSuiteId,
+      taskId,
+    };
+
+    // Firestore에 데이터 저장
+    await setDoc(sessionCodeDocRef, sessionCodeData);
+
+    console.log('Session Code saved successfully:', sessionCode);
+    return true;
+  } catch (error) {
+    console.error('Error saving Session Code:', error);
+    return false;
+  }
+};
