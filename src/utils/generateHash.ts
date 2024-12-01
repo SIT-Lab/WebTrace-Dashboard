@@ -5,14 +5,10 @@
  * @param taskId string - Task ID
  * @returns Promise<string> - 생성된 세션코드
  */
-export const generateHash = async (
-    projectId: string,
-    taskSuiteId: string,
-    taskId: string
-): Promise<string> => {
-    const data = `${projectId}-${taskSuiteId}-${taskId}`;
-    const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data));
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const fullHash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join(''); // 전체 Hexadecimal 해시
-    return fullHash
-};
+export const generateHash = async (projectId: string, taskSuiteId: string, taskId: string): Promise<string> => {
+  const data = `${projectId}-${taskSuiteId}-${taskId}`
+  const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data))
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const fullHash = hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('') // 전체 Hexadecimal 해시
+  return fullHash
+}

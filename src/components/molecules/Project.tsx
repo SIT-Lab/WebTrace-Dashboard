@@ -132,16 +132,12 @@ const IDBox = styled.div`
  */
 const GrayText = styled.span`
   color: ${COLORS.gray02};
-  
 `
 
 /**
  * 스타일이 적용된 세션코드 컨테이너
  */
-const SessionCodeContainer = styled.div`
-
-`;
-
+const SessionCodeContainer = styled.div``
 
 const SessionCodeContainerHeader = styled.div`
   margin-top: 8px; /* 위쪽 간격 조정 */
@@ -169,7 +165,7 @@ const SessionCode = styled.span`
   font-weight: 500; /* 약간 얇게 설정 */
   display: inline-block; /* 텍스트를 한 줄로 유지 */
   line-height: 1.2; /* 텍스트 높이 조정 */
-`;
+`
 
 /**
  * Project 컴포넌트
@@ -182,7 +178,7 @@ export default function Project() {
   const [loading, setLoading] = useState(true)
   const [isAddTaskSuiteModal, setIsAddTaskSuiteModal] = useState(false)
   const [isAddTaskModal, setIsAddTaskModal] = useState(false)
-  const [sessionCodes, setSessionCodes] = useState<{ [key: string]: string }>({});
+  const [sessionCodes, setSessionCodes] = useState<{ [key: string]: string }>({})
 
   const navigate = useNavigate()
 
@@ -228,16 +224,16 @@ export default function Project() {
    */
   useEffect(() => {
     const generateSessionCode = async () => {
-      const numbers: { [key: string]: string } = {};
+      const numbers: { [key: string]: string } = {}
       for (const task of tasks) {
-        const hash = await generateHash(projectid || '', tasksuiteid || '', task.id);
-        numbers[task.id] = hash;
+        const hash = await generateHash(projectid || '', tasksuiteid || '', task.id)
+        numbers[task.id] = hash
       }
-      setSessionCodes(numbers);
-    };
+      setSessionCodes(numbers)
+    }
 
-    generateSessionCode();
-  }, [tasks, projectid, tasksuiteid]);
+    generateSessionCode()
+  }, [tasks, projectid, tasksuiteid])
 
   return loading ? (
     <></>
@@ -332,9 +328,7 @@ export default function Project() {
                 tasks.map((t, i) => (
                   <>
                     <SessionCodeContainer>
-                      <SessionCodeContainerHeader>
-                        Session Code
-                      </SessionCodeContainerHeader>
+                      <SessionCodeContainerHeader>Session Code</SessionCodeContainerHeader>
                       <SessionCode>{sessionCodes[t.id] || 'Loading...'}</SessionCode>
                     </SessionCodeContainer>
                     <Task
@@ -355,27 +349,27 @@ export default function Project() {
             <SetRight>
               <OneInputModal
                 sendInputValue={async (value) => {
-                  const docRef = await addTask(projectid || '', tasksuiteid || '', value);
+                  const docRef = await addTask(projectid || '', tasksuiteid || '', value)
                   if (docRef) {
                     // Task 생성 성공
-                    alert('You have successfully added the task.');
+                    alert('You have successfully added the task.')
 
                     // Task ID 추출
-                    const taskId = docRef.id;
+                    const taskId = docRef.id
 
                     // 세션코드 생성 및 저장
-                    const sessionCodeSaved = await addSessionCode(projectid || '', tasksuiteid || '', taskId);
+                    const sessionCodeSaved = await addSessionCode(projectid || '', tasksuiteid || '', taskId)
 
                     if (sessionCodeSaved) {
-                      alert('Session Code successfully saved.');
+                      alert('Session Code successfully saved.')
                     } else {
-                      alert('Failed to save Session Code.');
+                      alert('Failed to save Session Code.')
                     }
 
-                    location.reload();
+                    location.reload()
                   } else {
                     // Task 생성 실패
-                    alert('Failed to add the task.');
+                    alert('Failed to add the task.')
                   }
                 }}
                 isShowModal={isAddTaskModal}

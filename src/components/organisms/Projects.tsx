@@ -32,7 +32,7 @@ const ItemInfoBox = styled.div`
   align-items: center; /* 수평 가운데 정렬 */
   justify-content: center; /* 수직 가운데 정렬 */
   margin-left: 15px;
-`;
+`
 
 /**
  * 스타일이 적용된 16px 간격
