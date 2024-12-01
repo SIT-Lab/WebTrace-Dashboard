@@ -21,7 +21,7 @@ const Container = styled.div`
 `
 
 const Item = styled.div`
-  padding: 20px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid ${COLORS.gray01};
@@ -29,7 +29,10 @@ const Item = styled.div`
 const ItemInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-`
+  align-items: center; /* 수평 가운데 정렬 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  margin-left: 15px;
+`;
 
 /**
  * 스타일이 적용된 16px 간격
@@ -95,7 +98,7 @@ function Projects(props: ProjectsProps) {
             >
               <ItemInfoBox>
                 <span>{proj.title}</span>
-                <GrayText>{`ID: ${proj.id}`}</GrayText>
+                {/* <GrayText>{`ID: ${proj.id}`}</GrayText> */}
               </ItemInfoBox>
               <IconButton
                 iconPath={deleteIcon}
