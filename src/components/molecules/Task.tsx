@@ -25,6 +25,7 @@ const Root = styled.div`
  */
 const Container = styled.div`
   border-radius: 16px;
+  border-top-left-radius: 0;
   background-color: ${COLORS.white};
   width: 100%;
   box-sizing: border-box;
@@ -129,12 +130,12 @@ function Task(props: TaskData) {
                 <GrayText>{props.title}</GrayText>
               </span>
             </InfoLine>
-            <InfoLine>
+            {/* <InfoLine>
               <span>
                 <span style={{ fontWeight: 'bold' }}>ID: </span>
                 <GrayText>{props.id}</GrayText>
               </span>
-            </InfoLine>
+            </InfoLine> */}
             <InfoLine>
               <span>
                 <span style={{ fontWeight: 'bold' }}>Modified At: </span>
